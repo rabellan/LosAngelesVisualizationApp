@@ -1,0 +1,16 @@
+Crime
+-
+crime_id VARCHAR(16) PK
+date_rptd DATE
+date_occ DATE
+time_occ VARCHAR(4)
+area INT
+area_name VARCHAR(20)
+crim_cd INT
+crim_cd_desc VARCHAR(64)
+vict_age INT
+vict_sex VARCHAR(1) NULL
+vict_descent VARCHAR(1) NULL
+location VARCHAR(64)
+lat NUMERIC(7,4)
+lon NUMERIC(7,4)

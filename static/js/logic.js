@@ -1,36 +1,21 @@
-// create function that draws the map
-function createMap(){
+// create map here
+// Downtown LA zoomed at 10
+let myMap = L.map("map", {
+  center: [34.02717700409306, -118.2769483261598],
+  zoom: 10
+});
 
-    // Create the tile layer that will be the background of our map.
-    let streetmap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
+// Add a tile layer.
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(myMap);
 
-    // Create baseMaps object to hole streetmap layer
-    let baseMaps = {
-        "Street Map": streetmap
-    };
-
-    // Create overlapMaps object for whatever you want to lay over
-    let overlayMaps = {
-            
-    };
-
-    // Create the map object with options.
-    let map = L.map("map-id", {
-        center: [34.02717700409306, -118.2769483261598],
-        zoom: 12,
-        layers: [streetmap]
-    });
-
-    // Create layers control
-    L.control.layers(baseMaps, overlayMaps, {
-        collapse: false
-    }).addTo(map);
-
-}
-
-createMap();
-
-// // Perform an API call to the Citi Bike API to get the station information. Call createMarkers when it completes.
-// d3.json("https://gbfs.citibikenyc.com/gbfs/en/station_information.json").then(createMarkers);
+// This is the marker logic below
+// check mcd_locations array for missing entries
+mcd_locations.forEach(location => {
+  if (location.location_1 && location.location_1.latitude && location.location_1.longitude) {
+    L.marker([location.location_1.latitude, location.location_1.longitude])
+      .bindPopup(`<h1>${location.dba_name}</h1> <hr> <h4>Zip Code ${location.zip_code}</h4> <h4>Business Owner ${location.business_name}</h4>`)
+      .addTo(myMap);
+  }
+});

@@ -1,3 +1,7 @@
+import { hi } from './db.js'
+//var db = require('./database.js');
+
+
 // create map here
 // Downtown LA zoomed at 10
 let myMap = L.map("map", {

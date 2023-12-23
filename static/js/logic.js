@@ -59,3 +59,36 @@ la_crime_data.forEach(crime => {
   }
 });
 myMap.addLayer(crimeClusterGroup);
+
+// Create a legend for Cluster Marker frequency and position it at the bottom right
+// We need more styling done for this legend
+// Research CSS for Marker Cluster plugin
+// 
+// var legend = L.control({ position: 'bottomleft' });
+
+// legend.onAdd = function (map) {
+//     var div = L.DomUtil.create('div', 'info legend'),
+//         grades = ['Color 1', 'Color 2', 'Color 3'], // Replace with your color codes
+//         labels = [];
+
+//     // loop through our density intervals and generate a label with a colored square for each interval
+//     grades.forEach(function (grade, index) {
+//         div.innerHTML +=
+//             '<i style="background:' + getColor(grade) + '"></i> ' +
+//             grade + '<br>';
+//     });
+
+//     return div;
+// };
+
+// legend.addTo(myMap);
+
+// // Function to return color based on the grade
+// function getColor(grade) {
+//     switch (grade) {
+//         case 'Color 1': return '#ff0000'; // replace with actual color code
+//         case 'Color 2': return '#00ff00'; // replace with actual color code
+//         case 'Color 3': return '#0000ff'; // replace with actual color code
+//         default: return '#ffffff';
+//     }
+// }

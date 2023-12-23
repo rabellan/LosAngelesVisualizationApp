@@ -21,10 +21,10 @@
 // });
 
 // create map here
-// Downtown LA zoomed at 10
+// Coordinates of LACMA at 10 zoom
 let myMap = L.map("map", {
-  center: [34.02717700409306, -118.2769483261598],
-  zoom: 12
+  center: [34.07034926864842, -118.35914276112172],
+  zoom: 10.5
 });
 
 // Add a tile layer.

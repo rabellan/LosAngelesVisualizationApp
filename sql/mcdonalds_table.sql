@@ -2,8 +2,9 @@
 -- Link to schema: https://app.quickdatabasediagrams.com/#/d/R6eiy7
 -- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
 
-DROP TABLE IF EXISTS mcdonalds;
+-- DROP TABLE IF EXISTS mcdonalds;
 
+/*
 CREATE TABLE McDonalds (
     "id" SERIAL   NOT NULL,
     "location_num" VARCHAR(20)   NOT NULL,
@@ -19,4 +20,38 @@ CREATE TABLE McDonalds (
      )
 );
 
+ALTER TABLE mcdonalds
+ADD COLUMN lat NUMERIC(7,4),
+ADD COLUMN lon NUMERIC(7,4);
+
+
+MERGE INTO mcdonalds mcd
+USING (select id, substring(split_part(location, ',', 1), 2) as lat from mcdonalds) lat
+ON mcd.id = lat.id
+WHEN MATCHED THEN
+UPDATE SET lat = lat.lat::NUMERIC(7,4)
+WHEN NOT MATCHED THEN
+DO NOTHING;
+
+MERGE INTO mcdonalds mcd
+USING (select id, substring(split_part(location, ',', 2), 1, length(split_part(location, ',', 2)) - 1) as lon from mcdonalds) lon
+ON mcd.id = lon.id
+WHEN MATCHED THEN
+UPDATE SET lon = lon.lon::NUMERIC(7,4)
+WHEN NOT MATCHED THEN
+DO NOTHING;
+
+ALTER TABLE mcdonalds
+DROP COLUMN location;
+*/
+
+
+select id, substring(split_part(location, ',', 1), 2) from mcdonalds;
+select id, substring(split_part(location, ',', 2), 1, length(split_part(location, ',', 2)) - 1) from mcdonalds;
+
 select * from mcdonalds;
+
+
+
+
+

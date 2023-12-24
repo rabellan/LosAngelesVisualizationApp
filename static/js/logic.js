@@ -1,5 +1,6 @@
-import { hi } from './db.js'
-//var db = require('./database.js');
+const db = require('./db.js');
+const express = require('express');
+const app = express();
 
 
 // create map here

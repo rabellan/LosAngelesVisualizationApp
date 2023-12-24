@@ -1,4 +1,5 @@
-import { Client } from '/node_modules/pg';
+//import { Client } from '/node_modules/pg';
+const { Client } = require('pg');
 
 async function connect_client() {
     const client = new Client({
@@ -13,7 +14,6 @@ async function connect_client() {
 }
 
 
-
-//var hi = "hi";
+var hi = "hi";
 console.log('hello')
-export const hi = "hi";
+module.exports = hi;

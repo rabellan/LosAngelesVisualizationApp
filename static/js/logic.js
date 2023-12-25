@@ -41,32 +41,35 @@ myMap.addLayer(crimeClusterGroup);
 // Create a legend for Cluster Marker frequency and position it at the bottom right
 // We need more styling done for this legend
 // Research CSS for Marker Cluster plugin
-// 
-// var legend = L.control({ position: 'bottomleft' });
 
-// legend.onAdd = function (map) {
-//     var div = L.DomUtil.create('div', 'info legend'),
-//         grades = ['Color 1', 'Color 2', 'Color 3'], // Replace with your color codes
-//         labels = [];
+var legend = L.control({ position: 'bottomleft' });
 
-//     // loop through our density intervals and generate a label with a colored square for each interval
-//     grades.forEach(function (grade, index) {
-//         div.innerHTML +=
-//             '<i style="background:' + getColor(grade) + '"></i> ' +
-//             grade + '<br>';
-//     });
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = ['1-9 Incidents', '10 - 99 Incidents', '> 100 Incidents'], // Replace with your color codes
+        labels = [];
 
-//     return div;
-// };
+    //Legend Title
+    div.innerHTML = '<strong>Number of Incidents</strong><br>';
 
-// legend.addTo(myMap);
+    // loop through our density intervals and generate a label with a colored square for each interval
+    grades.forEach(function (grade, index) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grade) + '"></i> ' +
+            grade + '<br>';
+    });
 
-// // Function to return color based on the grade
-// function getColor(grade) {
-//     switch (grade) {
-//         case 'Color 1': return '#ff0000'; // replace with actual color code
-//         case 'Color 2': return '#00ff00'; // replace with actual color code
-//         case 'Color 3': return '#0000ff'; // replace with actual color code
-//         default: return '#ffffff';
-//     }
-// }
+    return div;
+};
+
+legend.addTo(myMap);
+
+// Function to return color based on the grade
+function getColor(grade) {
+    switch (grade) {
+        case '1-9 Incidents': return '#B5E28C'; // replace with actual color code
+        case '10 - 99 Incidents': return '#F1D357'; // replace with actual color code
+        case '> 100 Incidents': return '#FD9C73'; // replace with actual color code
+        default: return '#ffffff';
+    }
+}

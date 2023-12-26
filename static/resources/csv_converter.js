@@ -2,7 +2,7 @@ const fs = require('fs');
 const Papa = require('papaparse');
 
 // Read the CSV file
-const csvData = fs.readFileSync('McDonald_s.csv', 'utf8');
+const csvData = fs.readFileSync('la_city_crime_data.csv', 'utf8');
 
 // Parse CSV to JSON
 Papa.parse(csvData, {
@@ -12,7 +12,7 @@ Papa.parse(csvData, {
     const jsonData = JSON.stringify(result.data, null, 2);
 
     // Write JSON data to a file
-    fs.writeFileSync('mcd_locations.json', jsonData);
+    fs.writeFileSync('la_city_crime_data.json', jsonData);
 
     console.log('Conversion complete. JSON file created: output.json');
   }

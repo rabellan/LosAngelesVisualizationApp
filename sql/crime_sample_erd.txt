@@ -1,6 +1,6 @@
 Crime
 -
-crime_id VARCHAR(16) PK
+crime_id INT PK
 date_rptd DATE
 date_occ DATE
 time_occ VARCHAR(4)

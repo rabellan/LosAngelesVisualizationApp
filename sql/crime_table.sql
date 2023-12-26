@@ -5,7 +5,7 @@
 DROP TABLE IF EXISTS crime;
 
 CREATE TABLE Crime (
-    "crime_id" VARCHAR(16)   NOT NULL,
+    "crime_id" int   NOT NULL,
     "date_rptd" DATE   NOT NULL,
     "date_occ" DATE   NOT NULL,
     "time_occ" VARCHAR(4)   NOT NULL,

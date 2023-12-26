@@ -1,6 +1,6 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
-//let flag = false;
-let flag = true;
+let flag = false;
+//let flag = true;
 
 
 // Create a McDonald's icon

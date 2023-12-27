@@ -11,19 +11,36 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(myMap);
 
 // Create a McDonald's icon
-let mcdonaldsIcon = new L.Icon({
-  iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
-  iconSize: [35, 40],      // Size of the icon
-  iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
-  popupAnchor: [0, -40]    // Point from which the popup should open relative to the iconAnchor
-});
+// let mcdonaldsIcon = new L.Icon({
+//   iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
+//   iconSize: [35, 40],      // Size of the icon
+//   iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
+//   popupAnchor: [0, -40]    // Point from which the popup should open relative to the iconAnchor
+// });
 
 // Marker for McDonald's locations
 mcd_locations.forEach(location => {
   if (location.location_1 && location.location_1.latitude && location.location_1.longitude) {
-    L.marker([location.location_1.latitude, location.location_1.longitude], {icon: mcdonaldsIcon})
+    var marker = L.marker([location.location_1.latitude, location.location_1.longitude], )//{icon: mcdonaldsIcon})
       .bindPopup(`<h1>${location.dba_name}</h1> <hr> <h4>Zip Code ${location.zip_code}</h4> <h4>Business Owner ${location.business_name}</h4>`)
       .addTo(myMap);
+
+    marker.on('click', function() {
+      // Toggle the class 'active' on both the map and sidebar elements
+      var mapContainer = document.getElementById('map');
+      // figure out how to make it not turn off when clicking on a new marker
+      mapContainer.classList.toggle('active');
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+    
+    // Close the sidebar when clicking outside of it
+    myMap.on('click', function() {
+      var mapContainer = document.getElementById('map');
+      if (mapContainer.classList.contains('active')) {
+        mapContainer.classList.remove('active');
+        document.getElementById('sidebar').classList.remove('active');
+      }
+    });  
   }
 });
 

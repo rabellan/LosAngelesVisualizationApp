@@ -32,3 +32,31 @@ h1 {
   margin-right: 8px;
   opacity: 0.7;
 }
+
+#sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
+  transition: 0.5s;
+  background-color: #111;
+  padding-top: 60px;
+  color: white;
+}
+
+#sidebar-content {
+  padding: 15px;
+}
+
+#sidebar h2 {
+  color: #818181;
+}
+
+#sidebar.active {
+  width: 250px;
+}
+
+#map.active {
+  width: calc(100% - 250px);
+}

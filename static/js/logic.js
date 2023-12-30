@@ -1,22 +1,22 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
-let flag = false;
-//let flag = true;
+// let flag = false;
+let flag = true;
 
 
 // Create a McDonald's icon
-let mcdonaldsIcon = new L.Icon({
-  iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
-  iconSize: [35, 40],      // Size of the icon
-  iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
-  popupAnchor: [0, -40]    // Point from which the popup should open relative to the iconAnchor
-});
+// let mcdonaldsIcon = new L.Icon({
+//   iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
+//   iconSize: [35, 40],      // Size of the icon
+//   iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
+//   popupAnchor: [0, -40]    // Point from which the popup should open relative to the iconAnchor
+// });
 
 // Marker for McDonald's locations
 let mcdLayer = L.layerGroup()
 if (!flag) {
   mcd_locations.forEach(location => {
     if (location.location_1 && location.location_1.latitude && location.location_1.longitude) {
-      let mcdMarker = L.marker([location.location_1.latitude, location.location_1.longitude], {icon: mcdonaldsIcon})
+      let mcdMarker = L.marker([location.location_1.latitude, location.location_1.longitude])//, {icon: mcdonaldsIcon})
         .bindPopup(`<h1>${location.dba_name}</h1> <hr> <h4>Zip Code ${location.zip_code}</h4> <h4>Business Owner ${location.business_name}</h4>`)
       mcdLayer.addLayer(mcdMarker);
     }
@@ -30,14 +30,46 @@ else {
     //console.log(data);
     data.forEach(mcd => {
       if (mcd.lat && mcd.lon) {
-        let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdonaldsIcon})
+        let mcdMarker = L.marker([mcd.lat, mcd.lon])//, {icon: mcdonaldsIcon})
         .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Zip Code ${mcd.zipcode}</h4> <h4>Business Owner ${mcd.business_name}</h4>`);
+
+        mcdMarker.on('click', function() {
+          // // Toggle the class 'active' on both the map and sidebar elements
+          console.log('turning on');
+          var mapContainer = document.getElementById('map');
+          
+          if(!mapContainer.classList.contains('active')){
+            console.log("didnt contain active");
+            mapContainer.classList.toggle('active');
+            document.getElementById('sidebar').classList.toggle('active');
+          }
+    
+          // Update the content of the sidebar with marker information
+          document.getElementById('marker-info').textContent = mcd.street_address;
+        });
+
         mcdLayer.addLayer(mcdMarker);
       }
     })
   })
   .catch(error => console.error('Error:', error));
 }
+
+document.addEventListener('click', function(event) {
+  console.log('its called');
+  var sidebar = document.getElementById('sidebar');
+  var clickedElement = event.target;
+
+  // Check if the clicked element is inside the sidebar or a marker
+  var isInsideSidebar = sidebar.contains(clickedElement);
+  var isInsideMarker = clickedElement.classList.contains('leaflet-marker-icon');
+
+  // If not inside the sidebar or a marker, close the sidebar
+  if (!isInsideSidebar && !isInsideMarker && sidebar.classList.contains('active')) {
+    sidebar.classList.remove('active');
+    document.getElementById('map').classList.remove('active');
+  }
+});
 
 
 // Marker Cluster for Crime Data

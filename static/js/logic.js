@@ -1,14 +1,57 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
-let flag = false;
-//let flag = true;
+// let flag = false;
+let flag = true;
 
+let yearOptions = [2023];
+
+let dayOptions = [];
+for (let i = 1; i <= 31; i++)
+  dayOptions.push(i);
+
+let monthOptions = [];
+for (let i = 1; i <= 12; i++)
+  monthOptions.push(i);
+
+
+function checkDate(year, month, day) {
+  if (!(month in monthOptions)){
+    return false;
+  }
+
+    
+
+  let short_months = [4, 6, 9, 11]
+  if (month == 2 && day in dayOptions.slice(0, -3)){
+    let leapYear = false;
+    if (year % 400 == 0) 
+      leapYear = true;
+    if (year % 4 == 0 && year % 100 != 0)
+      leapYear = true;
+    if (leapYear && day in dayOptions.slice(0, -2))
+      return true;
+    console.log('ehllo')
+    return false;
+  }
+    
+  else if (month in short_months && !(day in dayOptions.slice(0, -1))){
+    
+    return false;
+  }
+    
+  else
+    return true;
+}
+console.log(checkDate(2023, 12, 1))
+console.log(monthOptions)
 
 // Create a McDonald's icon
 let mcdonaldsIcon = new L.Icon({
-  iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
+  //iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
+  iconUrl: '../resources/mcd2.png',
   iconSize: [35, 40],      // Size of the icon
   iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
-  popupAnchor: [0, -40]    // Point from which the popup should open relative to the iconAnchor
+  popupAnchor: [0, -40],    // Point from which the popup should open relative to the iconAnchor
+  fillOpacity: 0
 });
 
 // Marker for McDonald's locations
@@ -32,12 +75,44 @@ else {
       if (mcd.lat && mcd.lon) {
         let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdonaldsIcon})
         .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Zip Code ${mcd.zipcode}</h4> <h4>Business Owner ${mcd.business_name}</h4>`);
+
+        mcdMarker.on('click', function() {
+          // Toggle the class 'active' on both the map and sidebar elements
+          console.log('turning on');
+          var mapContainer = document.getElementById('map');
+          
+          if(!mapContainer.classList.contains('active')){
+            console.log("didnt contain active");
+            mapContainer.classList.toggle('active');
+            document.getElementById('sidebar').classList.toggle('active');
+          }
+    
+          // Update the content of the sidebar with marker information
+          document.getElementById('marker-info').textContent = mcd.street_address;
+        });
+
         mcdLayer.addLayer(mcdMarker);
       }
     })
   })
   .catch(error => console.error('Error:', error));
 }
+
+document.addEventListener('click', function(event) {
+  //console.log('its called');
+  var sidebar = document.getElementById('sidebar');
+  var clickedElement = event.target;
+
+  // Check if the clicked element is inside the sidebar or a marker
+  var isInsideSidebar = sidebar.contains(clickedElement);
+  var isInsideMarker = clickedElement.classList.contains('leaflet-marker-icon');
+
+  // If not inside the sidebar or a marker, close the sidebar
+  if (!isInsideSidebar && !isInsideMarker && sidebar.classList.contains('active')) {
+    sidebar.classList.remove('active');
+    document.getElementById('map').classList.remove('active');
+  }
+});
 
 
 // Marker Cluster for Crime Data

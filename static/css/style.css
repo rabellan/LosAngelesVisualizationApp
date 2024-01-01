@@ -25,7 +25,7 @@ h1 {
   text-align: center;
 }
 
-#crime {
+#container {
   position: absolute;
   top: 10px;
   left: 100px;
@@ -34,6 +34,25 @@ h1 {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+#crime {
+  padding: 0;
+  margin: 0;
+}
+
+.menu {
+  padding: 0;
+  margin: 1px;
+}
+
+.button {
+  padding: 0;
+  margin: 0
+}
+
+#space {
+  padding: 5px;
 }
 
 #sidebar {

@@ -5,7 +5,8 @@ const port = 3000;
 
 const {
     queryCrime,
-    queryMcd
+    queryMcd,
+    crime_query
 } = require('./db.js');
 
 q = 'SELECT date_rptd, crim_cd_desc, location, lat, lon FROM crime \
@@ -20,8 +21,11 @@ function createApp() {
         res.setHeader('Content-Type', 'text/html');
         res.sendFile(path.join(__dirname, '../../index.html'));
     });
-    app.get('/api/crime', async (req, res) => {
-        let query = await queryCrime()
+    app.get('/api/crime/:date1/:date2', async (req, res) => {
+        const date1 = req.params.date1;
+        const date2 = req.params.date2;
+        //console.log(date1, date2);
+        let query = await queryCrime(crime_query, [date1,date2]);
         //console.log(query);
         res.json(query);
     });

@@ -40,5 +40,6 @@ async function queryMcd(query=mcd_query) {
 
 module.exports = {
     queryCrime,
-    queryMcd
+    queryMcd,
+    crime_query
 };

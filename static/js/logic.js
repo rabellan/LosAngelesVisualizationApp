@@ -1,6 +1,6 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
-let flag = false;
-//let flag = true;
+//let flag = false;
+let flag = true;
 
 // Create a McDonald's icon
 let mcdonaldsIcon = new L.Icon({
@@ -86,12 +86,10 @@ if (!flag) {
 }
 
 else {
-  fetch('http://localhost:3000/api/crime')
+  fetch('http://localhost:3000/api/crime/2023-12-04/2023-12-18')
   .then(response => response.json())
   .then(data => {
     //console.log(data);
-    //myMap.removeLayer(crimeClusterGroup);
-    //crimeClusterGroup = L.markerClusterGroup();
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
@@ -112,8 +110,8 @@ let baseMap = {
 }
 
 let overlayMap = {
-  Crime: crimeClusterGroup,
-  McDonalds: mcdLayer
+  McDonalds: mcdLayer,
+  Crime: crimeClusterGroup
 }
 
 // Create Map - coordinates of LACMA at 10 zoom
@@ -124,7 +122,7 @@ let myMap = L.map("map", {
 });
 
 // Creating control layer
-L.control.layers(baseMap, overlayMap, {
+let control = L.control.layers(baseMap, overlayMap, {
   collapsed: false
 }).addTo(myMap);
 

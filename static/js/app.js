@@ -6,12 +6,16 @@ const port = 3000;
 const {
     queryCrime,
     queryMcd,
+    queryChipotle,
+    queryWalmart,
+    queryStarbucks,
+    queryWalgreens,
     crime_query
 } = require('./db.js');
 
 q = 'SELECT date_rptd, crim_cd_desc, location, lat, lon FROM crime \
-where crime_id=231518531 or crime_id=231718721'
-q1 = 'SELECT date_rptd, crim_cd_desc, location, lat, lon FROM crime'
+where crime_id=231518531 or crime_id=231718721';
+q1 = 'SELECT date_rptd, crim_cd_desc, location, lat, lon FROM crime';
 
 
 function createApp() {
@@ -34,11 +38,29 @@ function createApp() {
         //console.log(query);
         res.json(query);
     });
+    app.get('/api/chipotle', async (req, res) => {
+        let query = await queryChipotle()
+        //console.log(query);
+        res.json(query);
+    });
+    app.get('/api/walmart', async (req, res) => {
+        let query = await queryWalmart()
+        //console.log(query);
+        res.json(query);
+    });
+    app.get('/api/starbucks', async (req, res) => {
+        let query = await queryStarbucks()
+        //console.log(query);
+        res.json(query);
+    });
+    app.get('/api/walgreens', async (req, res) => {
+        let query = await queryWalgreens()
+        //console.log(query);
+        res.json(query);
+    });
     app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
     });
 }
 
 createApp();
-
-//console.log('hello')

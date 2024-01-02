@@ -2,39 +2,41 @@
 //let flag = false;
 let flag = true;
 
-// Create a McDonald's icon
-let mcdonaldsIcon = new L.Icon({
-  //iconUrl: 'https://www.pinclipart.com/picdir/big/368-3688927_mcdonalds-logo-png-mcdonalds-logo-png-clipart.png',
-  iconUrl: '../resources/mcd.png',
-  iconSize: [35, 40],      // Size of the icon
-  iconAnchor: [17, 40],    // Point of the icon which will correspond to marker's location
-  popupAnchor: [0, -40],    // Point from which the popup should open relative to the iconAnchor
-  fillOpacity: 0
-});
+// Marker for business locations
+let mcdLayer = L.layerGroup();
+let chipotleLayer = L.layerGroup();
+let walmartLayer = L.layerGroup();
+let starbucksLayer = L.layerGroup();
+let walgreensLayer = L.layerGroup();
 
-// Marker for McDonald's locations
-let mcdLayer = L.layerGroup()
 if (!flag) {
   mcd_locations.forEach(mcd => {
     if (mcd.lat && mcd.lon) {
-      let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdonaldsIcon})
+      let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdIcon})
         .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Zip Code ${mcd.zipcode}</h4> <h4>Business Owner ${mcd.business_name}</h4>`)
       mcdLayer.addLayer(mcdMarker);
     }
   });
 }
-
 else {
-  fetch('http://localhost:3000/api/mcd')
+  fetchBusiness('http://localhost:3000/api/mcd', mcdLayer, mcdIcon);
+  fetchBusiness('http://localhost:3000/api/chipotle', chipotleLayer, chipotleIcon);
+  fetchBusiness('http://localhost:3000/api/walmart', walmartLayer, walmartIcon);
+  fetchBusiness('http://localhost:3000/api/starbucks', starbucksLayer, starbucksIcon);
+  fetchBusiness('http://localhost:3000/api/walgreens', walgreensLayer, walgreensIcon);
+}
+
+function fetchBusiness(route, layer, logo) {
+  fetch(route)
   .then(response => response.json())
   .then(data => {
     //console.log(data);
-    data.forEach(mcd => {
-      if (mcd.lat && mcd.lon) {
-        let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdonaldsIcon})
-        .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Zip Code ${mcd.zipcode}</h4> <h4>Business Owner ${mcd.business_name}</h4>`);
+    data.forEach(business => {
+      if (business.lat && business.lon) {
+        let businessMarker = L.marker([business.lat, business.lon], {icon: logo})
+        .bindPopup(`<h1>${business.dba_name}</h1> <hr> <h4>Zip Code ${business.zipcode}</h4> <h4>Business Owner ${business.business_name}</h4>`);
 
-        mcdMarker.on('click', function() {
+        businessMarker.on('click', function() {
           // Toggle the class 'active' on both the map and sidebar elements
           console.log('turning on');
           var mapContainer = document.getElementById('map');
@@ -46,10 +48,10 @@ else {
           }
     
           // Update the content of the sidebar with marker information
-          document.getElementById('marker-info').textContent = mcd.street_address;
+          document.getElementById('marker-info').textContent = business.street_address;
         });
 
-        mcdLayer.addLayer(mcdMarker);
+        layer.addLayer(businessMarker);
       }
     })
   })
@@ -73,6 +75,7 @@ document.addEventListener('click', function(event) {
 });
 
 
+
 // Marker Cluster for Crime Data
 let crimeClusterGroup = L.markerClusterGroup();
 if (!flag) {
@@ -84,7 +87,6 @@ if (!flag) {
     }
   });
 }
-
 else {
   fetch('http://localhost:3000/api/crime/2023-12-04/2023-12-18')
   .then(response => response.json())
@@ -111,6 +113,10 @@ let baseMap = {
 
 let overlayMap = {
   McDonalds: mcdLayer,
+  Chipotle: chipotleLayer,
+  Walmart: walmartLayer,
+  Starbucks: starbucksLayer,
+  Walgreens: walgreensLayer,
   Crime: crimeClusterGroup
 }
 
@@ -128,25 +134,20 @@ let control = L.control.layers(baseMap, overlayMap, {
 
 
 
-
 // Create a legend for Cluster Marker frequency and position it at the bottom right
 var legend = L.control({ position: 'bottomleft' });
-
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = ['1-9 Incidents', '10 - 99 Incidents', '> 100 Incidents'], // Replace with your color codes
         labels = [];
-
     //Legend Title
     div.innerHTML = '<strong>Number of Incidents</strong><br>';
-
     // loop through our density intervals and generate a label with a colored square for each interval
     grades.forEach(function (grade, index) {
         div.innerHTML +=
             '<i style="background:' + getColor(grade) + '"></i> ' +
             grade + '<br>';
     });
-
     return div;
 };
 

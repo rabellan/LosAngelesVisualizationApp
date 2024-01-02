@@ -1,0 +1,11 @@
+Business
+-
+id SERIAL PK
+location_num VARCHAR(20)
+business_name VARCHAR(64)
+dba_name VARCHAR(64) NULL
+street_address VARCHAR(64)
+city VARCHAR(64)
+zipcode VARCHAR(10)
+location_desc VARCHAR(64)
+location VARCHAR(64) NULL

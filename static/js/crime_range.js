@@ -40,7 +40,7 @@ function checkDate(year_param, month_param, day_param) {
     console.log("date is not valid for short months");
     return false;
     }
-    else if (!(dayOptions.slice(0, -1).includes(day))) {
+    else if (!(dayOptions.includes(day))) {
     console.log("date is over 31 days");
     return false;
     }

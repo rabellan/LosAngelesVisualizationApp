@@ -90,6 +90,7 @@ function printSelections() {
 }
 
 function getCrimeData() {
+    let container = d3.select("#date-container");
     let year1 = d3.select("#menu1").property("value");
     let month1 = d3.select("#menu2").property("value");
     let day1 = d3.select("#menu3").property("value");
@@ -100,15 +101,18 @@ function getCrimeData() {
     console.log(`${year2}-${month2}-${day2}`);
     if (!(checkDate(year1, month1, day1) && checkDate(year2, month2, day2))){
         console.log("At least one of your dates are invalid.")
+        container.attr("class", "wrong-date");
         return;
     }
     if (!(compareDateStr(`${year1}-${month1}-${day1}`, `${year2}-${month2}-${day2}`))){
         console.log("The first date is later than the second date.")
+        container.attr("class", "wrong-date");
         return;
     }
     fetch(`http://localhost:3000/api/crime/${year1}-${month1}-${day1}/${year2}-${month2}-${day2}`)
     .then(response => response.json())
     .then(data => {
+    container.attr("class", "right-date");
     //console.log(data);
     control.removeLayer(crimeClusterGroup);
     myMap.removeLayer(crimeClusterGroup);

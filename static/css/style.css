@@ -29,17 +29,21 @@ h1 {
   top: 10px;
   left: 100px;
   z-index: 1000;
-  background-color: white;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font: 14px Arial, Helvetica, sans-serif;
-  background: white;
-  background: rgba(255, 255, 255, 0.8);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
   line-height: 24px;
   color: #555;
+}
+
+.right-date {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.wrong-date {
+  background: rgba(254, 170, 170, 0.8);
 }
 
 #crime {
@@ -63,12 +67,10 @@ h1 {
 
 #sidebar {
   height: 100%;
-  width: 0;
   position: fixed;
   z-index: 1;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 0;
   background-color: #e10e0e;
   padding-top: 60px;
   color: white;

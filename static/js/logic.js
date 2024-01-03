@@ -2,6 +2,10 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
+let crimes = [];
+let cache = {};
+let year1;
+let dateRange = "2023-12-04/2023-12-18";
 
 // Marker for business locations
 let mcdLayer = L.layerGroup();
@@ -38,18 +42,57 @@ function fetchBusiness(route, layer, logo) {
         .bindPopup(`<h1>${business.dba_name}</h1> <hr> <h4>Zip Code ${business.zipcode}</h4> <h4>Business Owner ${business.business_name}</h4>`);
 
         businessMarker.on('click', function() {
+          if(cache.hasOwnProperty(business.id)){
+            console.log(`cache = ${Object.keys(cache[business.id])}`)
+          }
+          
           // Toggle the class 'active' on both the map and sidebar elements
-          console.log('turning on');
+          // console.log('turning on');
           var mapContainer = document.getElementById('map');
           
           if(!mapContainer.classList.contains('active')){
-            console.log("didnt contain active");
+            // console.log("didnt contain active");
             mapContainer.classList.toggle('active');
             document.getElementById('sidebar').classList.toggle('active');
           }
     
           // Update the content of the sidebar with marker information
           document.getElementById('marker-info').textContent = business.street_address;
+          //console.log(crimes[0]);
+
+          // Get crimes nearby
+          let nearbyCrimes = [];
+          // If the location's nearby crimes has already been searched, it will be stored in the cache
+          if(cache.hasOwnProperty(business.id) && cache[business.id].hasOwnProperty(dateRange)){
+            nearbyCrimes = cache[business.id][dateRange];
+          
+          }
+          // if(cache.hasOwnProperty(business.id)){
+          //   console.log(`first condition met for business ${business.id}`);
+          //   console.log(`the cache is ${Object.keys(cache[business.id])}`);
+          //   console.log(`data for ${cache[business.id]} is ${cache[business.id][dateRange]}`);
+          //   if(cache[business.id].hasOwnProperty(dateRange)){
+          //     console.log(`second condition met for business, dateRange: ${business.id}, ${dateRange}`);
+          //   }
+          // }
+          else{
+          // Otherwise calculate the nearby crimes
+            crimes.forEach(crime => {
+              if (geolib.getDistance([business.lat, business.lon], [crime.lat, crime.lon]) <= 500){
+                nearbyCrimes.push(crime);
+              }
+            })
+            // store nearby crimes in cache
+            if(!cache.hasOwnProperty(business.id)){
+              // console.log("clearing");
+              cache[business.id] = {};
+            }
+            cache[business.id][dateRange] = nearbyCrimes;
+            console.log("not found in cache")
+          }
+          // console.log(nearbyCrimes);
+
+
         });
 
         layer.addLayer(businessMarker);
@@ -93,11 +136,14 @@ else {
   .then(response => response.json())
   .then(data => {
     //console.log(data);
+    
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
       crimeClusterGroup.addLayer(crimeMarker);
+      crimes.push(crime);
     })
+  //console.log(crimes);
   })
   .catch(error => console.error('Error:', error));
 }

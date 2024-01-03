@@ -1,3 +1,4 @@
+//console.log(geolib.getDistance([37.7749, -122.4194], [38.7749, -122.4194]))
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;

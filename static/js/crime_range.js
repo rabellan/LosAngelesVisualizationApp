@@ -123,9 +123,11 @@ function getCrimeData() {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
       crimeClusterGroup.addLayer(crimeMarker);
+      crimes.push(crime);
     })
     myMap.addLayer(crimeClusterGroup);
     control.addOverlay(crimeClusterGroup, "Crime");
+    console.log("crime range updated");
     
   })
   .catch(error => console.error('Error:', error));

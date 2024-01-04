@@ -58,17 +58,18 @@ function fetchBusiness(route, layer, logo) {
     
           // Update the content of the sidebar with marker information
           document.getElementById('marker-info').textContent = business.street_address;
-          //console.log(crimes[0]);
 
           // Get crimes nearby
           let nearbyCrimes = [];
           // If the location's nearby crimes has already been searched, it will be stored in the cache
           if(cache.hasOwnProperty(business.id) && cache[business.id].hasOwnProperty(dateRange)){
             nearbyCrimes = cache[business.id][dateRange];
-          
+            console.log("found in cache");
           }
           else{
           // Otherwise calculate the nearby crimes
+          console.log("crimes below");
+          console.log(crimes);
             crimes.forEach(crime => {
               if (geolib.getDistance([business.lat, business.lon], [crime.lat, crime.lon]) <= 500){
                 nearbyCrimes.push(crime);
@@ -82,7 +83,7 @@ function fetchBusiness(route, layer, logo) {
             cache[business.id][dateRange] = nearbyCrimes;
             console.log("not found in cache")
           }
-          // console.log(nearbyCrimes);
+          console.log(nearbyCrimes);
           createPie(nearbyCrimes);
           createAgeHistogram(nearbyCrimes); 
 
@@ -111,7 +112,12 @@ document.addEventListener('click', function(event) {
   }
 });
 
-
+// function fetchCrimes(){
+//   let crimeMarker = L.marker([crime.lat, crime.lon])
+//       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
+//       crimeClusterGroup.addLayer(crimeMarker);
+//       crimes.push(crime);
+// }
 
 // Marker Cluster for Crime Data
 let crimeClusterGroup = L.markerClusterGroup();
@@ -132,7 +138,7 @@ else {
     
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
-      .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
+      .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);
       crimeClusterGroup.addLayer(crimeMarker);
       crimes.push(crime);
     })
@@ -204,7 +210,7 @@ function getColor(grade) {
 }
 
 function createPie(crimeData){
-  console.log(crimeData);
+  //console.log(crimeData);
 
   var config = {
     displayModeBar: false
@@ -235,21 +241,21 @@ function createPie(crimeData){
   var victDescentValues = crimeData.map(crime => crime.vict_descent);
 
   var victDescentCounts = {};
-    victDescentValues.forEach(value => {
-        victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
-    });
+  victDescentValues.forEach(value => {
+      victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
+  });
 
-    const pieChartData = {
-      labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
-      values: Object.values(victDescentCounts),
-      type: 'pie',
-      marker: {
-        colors: ['rgba(8, 29, 88, 0.7)', 'rgba(37, 52, 148, 0.7)', 'rgba(34, 94, 168, 0.7)', 'rgba(29, 145, 192, 0.7)',
-                'rgba(65, 182, 196, 0.7)', 'rgba(127, 205, 187, 0.7)', 'rgba(199, 233, 180, 0.7)', 'rgba(237, 248, 251, 0.7)',
-                'rgba(255, 255, 204, 0.7)', 'rgba(255, 237, 160, 0.7)', 'rgba(254, 217, 118, 0.7)', 'rgba(254, 178, 76, 0.7)',
-                'rgba(253, 141, 60, 0.7)', 'rgba(252, 78, 42, 0.7)', 'rgba(227, 26, 28, 0.7)', 'rgba(189, 0, 38, 0.7)',
-                'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
-      }
+  const pieChartData = {
+    labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
+    values: Object.values(victDescentCounts),
+    type: 'pie',
+    marker: {
+      colors: ['rgba(8, 29, 88, 0.7)', 'rgba(37, 52, 148, 0.7)', 'rgba(34, 94, 168, 0.7)', 'rgba(29, 145, 192, 0.7)',
+              'rgba(65, 182, 196, 0.7)', 'rgba(127, 205, 187, 0.7)', 'rgba(199, 233, 180, 0.7)', 'rgba(237, 248, 251, 0.7)',
+              'rgba(255, 255, 204, 0.7)', 'rgba(255, 237, 160, 0.7)', 'rgba(254, 217, 118, 0.7)', 'rgba(254, 178, 76, 0.7)',
+              'rgba(253, 141, 60, 0.7)', 'rgba(252, 78, 42, 0.7)', 'rgba(227, 26, 28, 0.7)', 'rgba(189, 0, 38, 0.7)',
+              'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
+    }
   };
   
   var pieChartLayout = {

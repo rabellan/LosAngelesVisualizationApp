@@ -28,8 +28,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  
 </head>
 
 <body>
@@ -44,6 +47,10 @@
       <div id="sidebar-content">
         <h2>Marker Information</h2>
         <p id="marker-info">Click on a marker to see information.</p>
+        <h4>Victim Ethnicity Breakdown</h4>
+        <div class="graph" id="vict-descent-pie-chart"></div>
+        <h4>Victim Age Histogram</h4>
+        <div class="graph" id="age-distribution"></div>
       </div>
     </div>
   </div>

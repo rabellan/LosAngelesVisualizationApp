@@ -8,7 +8,6 @@ let monthOptions = [];
 for (let i = 1; i <= 12; i++)
   monthOptions.push(i);
 
-
 function checkDate(year_param, month_param, day_param) {
     let year = parseInt(year_param);
     let month = parseInt(month_param);
@@ -114,9 +113,12 @@ function getCrimeData() {
     .then(data => {
     container.attr("class", "right-date");
     //console.log(data);
+    dateRange = `${year1}-${month1}-${day1}/${year2}-${month2}-${day2}`
     control.removeLayer(crimeClusterGroup);
     myMap.removeLayer(crimeClusterGroup);
     crimeClusterGroup = L.markerClusterGroup();
+    // Reset crimes array for new date range
+    crimes.length =0;
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;

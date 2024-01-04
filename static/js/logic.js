@@ -2,6 +2,10 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
+let crimes = [];
+let cache = {};
+let year1;
+let dateRange = "2023-12-04/2023-12-18";
 
 // Marker for business locations
 let mcdLayer = L.layerGroup();
@@ -38,18 +42,58 @@ function fetchBusiness(route, layer, logo) {
         .bindPopup(`<h1>${business.dba_name}</h1> <hr> <h4>Zip Code ${business.zipcode}</h4> <h4>Business Owner ${business.business_name}</h4>`);
 
         businessMarker.on('click', function() {
+          if(cache.hasOwnProperty(business.id)){
+            console.log(`cache = ${Object.keys(cache[business.id])}`)
+          }
+          
           // Toggle the class 'active' on both the map and sidebar elements
-          console.log('turning on');
+          // console.log('turning on');
           var mapContainer = document.getElementById('map');
           
           if(!mapContainer.classList.contains('active')){
-            console.log("didnt contain active");
+            // console.log("didnt contain active");
             mapContainer.classList.toggle('active');
             document.getElementById('sidebar').classList.toggle('active');
           }
     
           // Update the content of the sidebar with marker information
           document.getElementById('marker-info').textContent = business.street_address;
+          //console.log(crimes[0]);
+
+          // Get crimes nearby
+          let nearbyCrimes = [];
+          // If the location's nearby crimes has already been searched, it will be stored in the cache
+          if(cache.hasOwnProperty(business.id) && cache[business.id].hasOwnProperty(dateRange)){
+            nearbyCrimes = cache[business.id][dateRange];
+          
+          }
+          // if(cache.hasOwnProperty(business.id)){
+          //   console.log(`first condition met for business ${business.id}`);
+          //   console.log(`the cache is ${Object.keys(cache[business.id])}`);
+          //   console.log(`data for ${cache[business.id]} is ${cache[business.id][dateRange]}`);
+          //   if(cache[business.id].hasOwnProperty(dateRange)){
+          //     console.log(`second condition met for business, dateRange: ${business.id}, ${dateRange}`);
+          //   }
+          // }
+          else{
+          // Otherwise calculate the nearby crimes
+            crimes.forEach(crime => {
+              if (geolib.getDistance([business.lat, business.lon], [crime.lat, crime.lon]) <= 500){
+                nearbyCrimes.push(crime);
+              }
+            })
+            // store nearby crimes in cache
+            if(!cache.hasOwnProperty(business.id)){
+              // console.log("clearing");
+              cache[business.id] = {};
+            }
+            cache[business.id][dateRange] = nearbyCrimes;
+            console.log("not found in cache")
+          }
+          // console.log(nearbyCrimes);
+          createPie(nearbyCrimes);
+          createAgeHistogram(nearbyCrimes); 
+
         });
 
         layer.addLayer(businessMarker);
@@ -93,11 +137,14 @@ else {
   .then(response => response.json())
   .then(data => {
     //console.log(data);
+    
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
       crimeClusterGroup.addLayer(crimeMarker);
+      crimes.push(crime);
     })
+  //console.log(crimes);
   })
   .catch(error => console.error('Error:', error));
 }
@@ -162,4 +209,122 @@ function getColor(grade) {
         case '> 100 Incidents': return '#FD9C73'; // replace with actual color code
         default: return '#ffffff';
     }
+}
+
+function createPie(crimeData){
+  console.log(crimeData);
+
+  var config = {
+    displayModeBar: false
+  };
+
+  const descentNames = {
+    "A": "Other Asian",
+    "B": "Black",
+    "C": "Chinese",
+    "D": "Cambodian",
+    "F": "Filipino",
+    "G": "Guamanian",
+    "H": "Hispanic/Latin/Mexican",
+    "I": "American Indian/Alaskan Native",
+    "J": "Japanese",
+    "K": "Korean",
+    "L": "Laotian",
+    "O": "Other",
+    "P": "Pacific Islander",
+    "S": "Samoan",
+    "U": "Hawaiian",
+    "V": "Vietnamese",
+    "W": "White",
+    "X": "Unknown",
+    "Z": "Asian Indian"
+};
+
+  var victDescentValues = crimeData.map(crime => crime.vict_descent);
+
+  var victDescentCounts = {};
+    victDescentValues.forEach(value => {
+        victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
+    });
+
+    const pieChartData = {
+      labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
+      values: Object.values(victDescentCounts),
+      type: 'pie',
+      marker: {
+        colors: ['rgba(8, 29, 88, 0.7)', 'rgba(37, 52, 148, 0.7)', 'rgba(34, 94, 168, 0.7)', 'rgba(29, 145, 192, 0.7)',
+                'rgba(65, 182, 196, 0.7)', 'rgba(127, 205, 187, 0.7)', 'rgba(199, 233, 180, 0.7)', 'rgba(237, 248, 251, 0.7)',
+                'rgba(255, 255, 204, 0.7)', 'rgba(255, 237, 160, 0.7)', 'rgba(254, 217, 118, 0.7)', 'rgba(254, 178, 76, 0.7)',
+                'rgba(253, 141, 60, 0.7)', 'rgba(252, 78, 42, 0.7)', 'rgba(227, 26, 28, 0.7)', 'rgba(189, 0, 38, 0.7)',
+                'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
+      }
+  };
+  
+  var pieChartLayout = {
+    title: 'Victim Descent Distribution',
+        height: 0.2 * window.innerHeight, // Set to one-fifth of the window height
+        margin: { t: 0, b: 0, l: 0, r: 0 }, // Adjust margins as needed
+        paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
+  };
+
+  // Render the Plotly pie chart
+  Plotly.newPlot('vict-descent-pie-chart', [pieChartData], pieChartLayout, config);
+}
+
+function createAgeHistogram(crimeData) {
+  var config = {
+      displayModeBar: false
+  };
+
+  // Extract victim ages
+  const victimAges = crimeData.map(crime => crime.vict_age);
+
+  // Calculate the average age
+  const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
+
+  // Create a histogram trace with YlGnBu color scale
+  const histogramTrace = {
+      x: victimAges,
+      type: 'histogram',
+      nbinsx: 20,
+      marker: {
+          color: victimAges,
+          colorscale: 'YlGnBu',
+          cmin: Math.min(...victimAges),
+          cmax: Math.max(...victimAges),
+          colorbar: {
+              title: 'Age',
+              tickvals: [Math.min(...victimAges), Math.max(...victimAges)],
+              ticktext: [Math.min(...victimAges), Math.max(...victimAges)],
+          }
+      }
+  };
+
+  // Layout options for the histogram
+  const histogramLayout = {
+      xaxis: {
+          title: 'Age'
+      },
+      yaxis: {
+          title: 'Frequency'
+      },
+      annotations: [
+          {
+              x: 0.95,
+              y: 0.95,
+              xref: 'paper',
+              yref: 'paper',
+              text: `Average Age: ${averageAge.toFixed(2)}`,
+              showarrow: false,
+              font: {
+                  size: 12,
+                  color: 'black'
+              },
+              margin: { t: 10, b: 0, l: 0, r: 0 }
+          }
+      ]
+  };
+
+  // Render the Plotly histogram with the layout configuration
+  Plotly.newPlot('age-distribution', [histogramTrace], histogramLayout, config);
 }

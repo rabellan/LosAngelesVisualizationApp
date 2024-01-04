@@ -8,7 +8,7 @@ const pool = new Pool({
     database: "la_crime_db"
 });
 
-crime_query = 'SELECT date_rptd, crim_cd_desc, location, lat, lon FROM crime\
+crime_query = 'SELECT date_rptd, crim_cd_desc, location, lat, lon, time_occ, vict_age, vict_sex, vict_descent FROM crime\
  WHERE date_rptd BETWEEN $1 AND $2'
 
 crime_params = [

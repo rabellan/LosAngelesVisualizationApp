@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body, h1, p, #date-container, #sidebar, #sidebar-content, .legend {
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -18,6 +24,7 @@ html {
   /*flex:3;*/
   width: 100%;
   transition: width .3s;
+  z-index: 1;
 }
 
 h1 {
@@ -66,35 +73,52 @@ h1 {
 }
 
 #sidebar {
-  height: 100%;
+  height: 100vh;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   overflow-x: hidden;
   transition: 0.5s;
-  background-color: #e10e0e;
-  padding-top: 60px;
-  color: white;
+  background-color: #ddd; /* Updated background color */
+  /* padding-top: 60px; */
+  color: black; /* Updated font color */
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.8); /* Added box shadow */
   right: 0; /* Adjust this to set the distance from the right edge */
-  opacity: .5;
+  opacity: 0;
   transition: opacity 0.3s, width .3s;
 }
 
 #sidebar-content {
-  padding: 0;
+  padding: 20px;
 }
 
 #sidebar h2 {
-  color: #818181;
+  color: black;
+}
+
+.graph{
+  height: 20%; /* Set to one-fifth of the sidebar height */
+  background-color: #ddd; /* Lighter background color for the pie chart */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  margin-top: 10px; /* Adjust margin as needed */
+  padding: 10px;
+}
+
+#vict-descent-pie-chart {
+  
+}
+
+#age-distribution{
+
 }
 
 #sidebar.active {
   flex:1;
-  width: 25%;
+  width: 40%;
   opacity: 1;
 }
 
 #map.active {
-  width: 75%;
+  width: 60%;
 }
 
 

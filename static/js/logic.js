@@ -213,23 +213,10 @@ function getColor(grade) {
 
 function createPie(crimeData){
   console.log(crimeData);
-  // var data = [{
-  //   x: [1, 2, 3, 4, 5],
-  //   y: [10, 11, 12, 13, 14],
-  //   type: 'bar'
-  // }];
-
-  // var layout = {
-  //     title: 'Plotly Graph Example'
-  // };
 
   var config = {
     displayModeBar: false
   };
-
-  // // Render the Plotly graph inside the "plotly-graph" div
-  // console.log(Plotly);
-  // Plotly.newPlot('plotly-graph', data, layout, config);
 
   const descentNames = {
     "A": "Other Asian",
@@ -263,7 +250,14 @@ function createPie(crimeData){
     const pieChartData = {
       labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
       values: Object.values(victDescentCounts),
-      type: 'pie'
+      type: 'pie',
+      marker: {
+        colors: ['rgba(8, 29, 88, 0.7)', 'rgba(37, 52, 148, 0.7)', 'rgba(34, 94, 168, 0.7)', 'rgba(29, 145, 192, 0.7)',
+                'rgba(65, 182, 196, 0.7)', 'rgba(127, 205, 187, 0.7)', 'rgba(199, 233, 180, 0.7)', 'rgba(237, 248, 251, 0.7)',
+                'rgba(255, 255, 204, 0.7)', 'rgba(255, 237, 160, 0.7)', 'rgba(254, 217, 118, 0.7)', 'rgba(254, 178, 76, 0.7)',
+                'rgba(253, 141, 60, 0.7)', 'rgba(252, 78, 42, 0.7)', 'rgba(227, 26, 28, 0.7)', 'rgba(189, 0, 38, 0.7)',
+                'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
+      }
   };
   
   var pieChartLayout = {
@@ -277,52 +271,59 @@ function createPie(crimeData){
   Plotly.newPlot('vict-descent-pie-chart', [pieChartData], pieChartLayout, config);
 }
 
-function createAgeHistogram(crimeData){
+function createAgeHistogram(crimeData) {
   var config = {
-    displayModeBar: false
+      displayModeBar: false
   };
-  
+
   // Extract victim ages
   const victimAges = crimeData.map(crime => crime.vict_age);
 
   // Calculate the average age
   const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
 
-  // Create a histogram trace
+  // Create a histogram trace with YlGnBu color scale
   const histogramTrace = {
       x: victimAges,
       type: 'histogram',
-      nbinsx: 20, // Adjust the number of bins as needed
+      nbinsx: 20,
       marker: {
-          color: 'rgba(100, 149, 237, 0.7)' // Adjust the color as needed
+          color: victimAges,
+          colorscale: 'YlGnBu',
+          cmin: Math.min(...victimAges),
+          cmax: Math.max(...victimAges),
+          colorbar: {
+              title: 'Age',
+              tickvals: [Math.min(...victimAges), Math.max(...victimAges)],
+              ticktext: [Math.min(...victimAges), Math.max(...victimAges)],
+          }
       }
   };
 
   // Layout options for the histogram
   const histogramLayout = {
-    // title: 'Age Distribution of Victims',
-    xaxis: {
-        title: 'Age'
-    },
-    yaxis: {
-        title: 'Frequency'
-    },
-    annotations: [
-        {
-            x: 0.95, // Adjust x-coordinate for positioning
-            y: 0.95, // Adjust y-coordinate for positioning
-            xref: 'paper',
-            yref: 'paper',
-            text: `Average Age: ${averageAge.toFixed(2)}`, // Display average age
-            showarrow: false,
-            font: {
-                size: 12,
-                color: 'black' // Adjust text color as needed
-            },
-            margin: { t: 10, b: 0, l: 0, r: 0 } // Reduce top margin
-        }
-    ]
-};
+      xaxis: {
+          title: 'Age'
+      },
+      yaxis: {
+          title: 'Frequency'
+      },
+      annotations: [
+          {
+              x: 0.95,
+              y: 0.95,
+              xref: 'paper',
+              yref: 'paper',
+              text: `Average Age: ${averageAge.toFixed(2)}`,
+              showarrow: false,
+              font: {
+                  size: 12,
+                  color: 'black'
+              },
+              margin: { t: 10, b: 0, l: 0, r: 0 }
+          }
+      ]
+  };
 
   // Render the Plotly histogram with the layout configuration
   Plotly.newPlot('age-distribution', [histogramTrace], histogramLayout, config);

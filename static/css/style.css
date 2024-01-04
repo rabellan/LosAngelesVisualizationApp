@@ -18,6 +18,7 @@ html {
   /*flex:3;*/
   width: 100%;
   transition: width .3s;
+  z-index: 1;
 }
 
 h1 {
@@ -68,23 +69,29 @@ h1 {
 #sidebar {
   height: 100%;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   overflow-x: hidden;
   transition: 0.5s;
-  background-color: #e10e0e;
-  padding-top: 60px;
-  color: white;
+  background-color: #333; /* Updated background color */
+  /* padding-top: 60px; */
+  color: #fff; /* Updated font color */
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.8); /* Added box shadow */
   right: 0; /* Adjust this to set the distance from the right edge */
-  opacity: .5;
+  opacity: 0;
   transition: opacity 0.3s, width .3s;
 }
 
 #sidebar-content {
-  padding: 0;
+  padding: 20px;
 }
 
 #sidebar h2 {
-  color: #818181;
+  color: #ddd;
+}
+
+#vict-descent-pie-chart {
+  height: 25%;
+  opacity: 1;
 }
 
 #sidebar.active {

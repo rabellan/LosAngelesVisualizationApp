@@ -91,7 +91,7 @@ function fetchBusiness(route, layer, logo) {
             console.log("not found in cache")
           }
           // console.log(nearbyCrimes);
-
+          createPie(nearbyCrimes);
 
         });
 
@@ -208,4 +208,45 @@ function getColor(grade) {
         case '> 100 Incidents': return '#FD9C73'; // replace with actual color code
         default: return '#ffffff';
     }
+}
+
+function createPie(crimeData){
+  console.log(crimeData);
+  // var data = [{
+  //   x: [1, 2, 3, 4, 5],
+  //   y: [10, 11, 12, 13, 14],
+  //   type: 'bar'
+  // }];
+
+  // var layout = {
+  //     title: 'Plotly Graph Example'
+  // };
+
+  var config = {
+    displayModeBar: false
+  };
+
+  // // Render the Plotly graph inside the "plotly-graph" div
+  // console.log(Plotly);
+  // Plotly.newPlot('plotly-graph', data, layout, config);
+
+  var victDescentValues = crimeData.map(crime => crime.vict_descent);
+
+  var victDescentCounts = {};
+    victDescentValues.forEach(value => {
+        victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
+    });
+
+  var pieChartData = {
+        labels: Object.keys(victDescentCounts),
+        values: Object.values(victDescentCounts),
+        type: 'pie'
+    };
+  
+  var pieChartLayout = {
+    title: 'Victim Descent Distribution'
+  };
+
+  // Render the Plotly pie chart
+  Plotly.newPlot('vict-descent-pie-chart', [pieChartData], pieChartLayout, config);
 }

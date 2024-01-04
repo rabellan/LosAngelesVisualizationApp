@@ -92,6 +92,7 @@ function fetchBusiness(route, layer, logo) {
           }
           // console.log(nearbyCrimes);
           createPie(nearbyCrimes);
+          createAgeHistogram(nearbyCrimes); 
 
         });
 
@@ -230,6 +231,28 @@ function createPie(crimeData){
   // console.log(Plotly);
   // Plotly.newPlot('plotly-graph', data, layout, config);
 
+  const descentNames = {
+    "A": "Other Asian",
+    "B": "Black",
+    "C": "Chinese",
+    "D": "Cambodian",
+    "F": "Filipino",
+    "G": "Guamanian",
+    "H": "Hispanic/Latin/Mexican",
+    "I": "American Indian/Alaskan Native",
+    "J": "Japanese",
+    "K": "Korean",
+    "L": "Laotian",
+    "O": "Other",
+    "P": "Pacific Islander",
+    "S": "Samoan",
+    "U": "Hawaiian",
+    "V": "Vietnamese",
+    "W": "White",
+    "X": "Unknown",
+    "Z": "Asian Indian"
+};
+
   var victDescentValues = crimeData.map(crime => crime.vict_descent);
 
   var victDescentCounts = {};
@@ -237,16 +260,70 @@ function createPie(crimeData){
         victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
     });
 
-  var pieChartData = {
-        labels: Object.keys(victDescentCounts),
-        values: Object.values(victDescentCounts),
-        type: 'pie'
-    };
+    const pieChartData = {
+      labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
+      values: Object.values(victDescentCounts),
+      type: 'pie'
+  };
   
   var pieChartLayout = {
-    title: 'Victim Descent Distribution'
+    title: 'Victim Descent Distribution',
+        height: 0.2 * window.innerHeight, // Set to one-fifth of the window height
+        margin: { t: 0, b: 0, l: 0, r: 0 }, // Adjust margins as needed
+        paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };
 
   // Render the Plotly pie chart
   Plotly.newPlot('vict-descent-pie-chart', [pieChartData], pieChartLayout, config);
+}
+
+function createAgeHistogram(crimeData){
+  var config = {
+    displayModeBar: false
+  };
+  
+  // Extract victim ages
+  const victimAges = crimeData.map(crime => crime.vict_age);
+
+  // Calculate the average age
+  const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
+
+  // Create a histogram trace
+  const histogramTrace = {
+      x: victimAges,
+      type: 'histogram',
+      nbinsx: 20, // Adjust the number of bins as needed
+      marker: {
+          color: 'rgba(100, 149, 237, 0.7)' // Adjust the color as needed
+      }
+  };
+
+  // Layout options for the histogram
+  const histogramLayout = {
+    // title: 'Age Distribution of Victims',
+    xaxis: {
+        title: 'Age'
+    },
+    yaxis: {
+        title: 'Frequency'
+    },
+    annotations: [
+        {
+            x: 0.95, // Adjust x-coordinate for positioning
+            y: 0.95, // Adjust y-coordinate for positioning
+            xref: 'paper',
+            yref: 'paper',
+            text: `Average Age: ${averageAge.toFixed(2)}`, // Display average age
+            showarrow: false,
+            font: {
+                size: 12,
+                color: 'black' // Adjust text color as needed
+            },
+            margin: { t: 10, b: 0, l: 0, r: 0 } // Reduce top margin
+        }
+    ]
+};
+
+  // Render the Plotly histogram with the layout configuration
+  Plotly.newPlot('age-distribution', [histogramTrace], histogramLayout, config);
 }

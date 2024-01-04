@@ -15,7 +15,7 @@ This application is collaborative work to fulfill the Project 3 requirement for 
 LeafletJS 1.9.4: JavaScript library for responsive maps
 Leaflet.MarkerCluster 1.7.1: Manages large numbers of map markers
 D3: A powerful JavaScript library for manipulating documents based on data
-
+Geolib: A library that provides geospatial operations
 
 ### Backend
 * **PostgreSQL** Database
@@ -25,6 +25,7 @@ D3: A powerful JavaScript library for manipulating documents based on data
     * **fs** 0.0.1-security: File system interactions.
     * **papaparse** 5.4.1: For CSV parsing (used for testing)
     * **pg** 8.11.3: PostgreSQL client.
+    * **express** 4.18.2: Minimal Node JS web framework
 
 ## Getting Started
 
@@ -35,6 +36,8 @@ D3: A powerful JavaScript library for manipulating documents based on data
     * Leaflet
     * MarkerCluster
     * Plotly
+    * D3
+    * Geolib
 
 
 ### Collaborators

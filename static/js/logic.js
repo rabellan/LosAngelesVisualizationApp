@@ -67,14 +67,6 @@ function fetchBusiness(route, layer, logo) {
             nearbyCrimes = cache[business.id][dateRange];
           
           }
-          // if(cache.hasOwnProperty(business.id)){
-          //   console.log(`first condition met for business ${business.id}`);
-          //   console.log(`the cache is ${Object.keys(cache[business.id])}`);
-          //   console.log(`data for ${cache[business.id]} is ${cache[business.id][dateRange]}`);
-          //   if(cache[business.id].hasOwnProperty(dateRange)){
-          //     console.log(`second condition met for business, dateRange: ${business.id}, ${dateRange}`);
-          //   }
-          // }
           else{
           // Otherwise calculate the nearby crimes
             crimes.forEach(crime => {
@@ -172,7 +164,7 @@ let overlayMap = {
 let myMap = L.map("map", {
   center: [34.07034926864842, -118.35914276112172],
   zoom: 10.5,
-  layers: [street, mcdLayer, crimeClusterGroup]
+  layers: [street, mcdLayer, chipotleLayer, crimeClusterGroup]
 });
 
 // Creating control layer
@@ -262,8 +254,8 @@ function createPie(crimeData){
   
   var pieChartLayout = {
     title: 'Victim Descent Distribution',
-        height: 0.2 * window.innerHeight, // Set to one-fifth of the window height
-        margin: { t: 0, b: 0, l: 0, r: 0 }, // Adjust margins as needed
+        height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+        margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
         paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };
 

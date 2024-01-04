@@ -26,6 +26,10 @@ html {
   transition: width .3s;
   z-index: 1;
 }
+/*
+.leaflet-control-layers .leaflet-control-layers-expanded .leaflet-control  {
+  z-index: 1000;
+}*/
 
 h1 {
   text-align: center;
@@ -75,7 +79,7 @@ h1 {
 #sidebar {
   height: 100vh;
   position: fixed;
-  z-index: 2;
+  z-index: 0;
   overflow-x: hidden;
   transition: 0.5s;
   background-color: #ddd; /* Updated background color */
@@ -96,18 +100,19 @@ h1 {
 }
 
 .graph{
-  height: 20%; /* Set to one-fifth of the sidebar height */
+  height: 20%;  /* Set to one-fifth of the sidebar height. PS. Height does not do anything here. */
   background-color: #ddd; /* Lighter background color for the pie chart */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   margin-top: 10px; /* Adjust margin as needed */
+  margin-right: 10px; /* Adjust margin as needed */
   padding: 10px;
 }
 
 #vict-descent-pie-chart {
-  
+
 }
 
-#age-distribution{
+#age-distribution {
 
 }
 
@@ -115,6 +120,7 @@ h1 {
   flex:1;
   width: 40%;
   opacity: 1;
+  z-index: 2;
 }
 
 #map.active {

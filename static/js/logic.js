@@ -250,12 +250,14 @@ function createPie(crimeData){
               'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
     }
   };
+
+  console.log("ethnicities below");
+  console.log(Object.keys(victDescentCounts));
   
   var pieChartLayout = {
-    title: 'Victim Descent Distribution',
-        height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
-        margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
-        paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
+    height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+    margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
+    paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };
 
   // Render the Plotly pie chart
@@ -264,56 +266,69 @@ function createPie(crimeData){
 
 function createAgeHistogram(crimeData) {
   var config = {
-      displayModeBar: false
+    displayModeBar: false
   };
 
   // Extract victim ages
-  const victimAges = crimeData.map(crime => crime.vict_age);
+  const victimAges = crimeData.map(crime => crime.vict_age).filter(age => age > 0);
+
+  if (victimAges.length === 0) {
+    // Handle the case where there are no valid ages
+    console.error('No valid ages available for histogram.');
+    return;
+  }
 
   // Calculate the average age
-  const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
+  var averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
+  console.log(averageAge);
+  if (averageAge==NaN){
+    averageAge = 'All ages unknown';
+  }
+
+  const averageAgeText = isNaN(averageAge) ? 'All Ages Unknown' : `Average Age: ${averageAge.toFixed(2)}`;
 
   // Create a histogram trace with YlGnBu color scale
   const histogramTrace = {
-      x: victimAges,
-      type: 'histogram',
-      nbinsx: 20,
-      marker: {
-          color: victimAges,
-          colorscale: 'YlGnBu',
-          cmin: Math.min(...victimAges),
-          cmax: Math.max(...victimAges),
-          colorbar: {
-              title: 'Age',
-              tickvals: [Math.min(...victimAges), Math.max(...victimAges)],
-              ticktext: [Math.min(...victimAges), Math.max(...victimAges)],
-          }
-      }
+    x: victimAges,
+    type: 'histogram',
+    nbinsx: 20,
+    marker: {
+      color: victimAges,
+      colorscale: 'YlGnBu',
+      cmin: Math.min(...victimAges),
+      cmax: Math.max(...victimAges),
+      // colorbar: {
+      //   title: 'Age',
+      //   tickvals: [Math.min(...victimAges), Math.max(...victimAges)],
+      //   ticktext: [Math.min(...victimAges), Math.max(...victimAges)],
+      // }
+    }
   };
 
   // Layout options for the histogram
   const histogramLayout = {
-      xaxis: {
-          title: 'Age'
-      },
-      yaxis: {
-          title: 'Frequency'
-      },
-      annotations: [
-          {
-              x: 0.95,
-              y: 0.95,
-              xref: 'paper',
-              yref: 'paper',
-              text: `Average Age: ${averageAge.toFixed(2)}`,
-              showarrow: false,
-              font: {
-                  size: 12,
-                  color: 'black'
-              },
-              margin: { t: 10, b: 0, l: 0, r: 0 }
-          }
-      ]
+    xaxis: {
+      title: 'Age'
+    },
+    yaxis: {
+      title: 'Frequency'
+    },
+    annotations: [
+      {
+        x: 0.95,
+        y: 1.05,
+        xref: 'paper',
+        yref: 'paper',
+        text: averageAgeText,
+        showarrow: false,
+        showlegend: false,
+        font: {
+          size: 12,
+          color: 'black'
+        },
+        margin: { t: 10, b: 0, l: 0, r: 0 }
+      }
+    ]
   };
 
   // Render the Plotly histogram with the layout configuration

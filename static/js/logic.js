@@ -408,12 +408,31 @@ function topThreeCrimes(crimeData){
   while (topThreeOL.firstChild) {
     topThreeOL.removeChild(topThreeOL.firstChild);
   }
-  for (let i = 0; i < Math.min(3, sortedCrimeCounts.length); i++){
+  for (let i = 0; i < Math.min(10, sortedCrimeCounts.length); i++){
     let li = document.createElement('li');
-    li.textContent = `${sortedCrimeCounts[i][0]}: ${sortedCrimeCounts[i][1]} occurrences`;
+    // var occ = "";
+    // if(sortedCrimeCounts[i][1] > 1){
+    //   occ = "occurences";
+    // }else{
+    //   occ = "occurence";
+    // }
+    li.textContent = `${capitalizeWords(sortedCrimeCounts[i][0])}: ${sortedCrimeCounts[i][1]}`;
     topThreeOL.append(li);
   }
   // // Output the sorted dictionary
   // console.log(sortedDictionary);
 
+}
+
+function capitalizeWords(str) {
+  // Split the string into an array of words
+  const words = str.toLowerCase().split(' ');
+
+  // Capitalize the first letter of each word
+  const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+
+  // Join the words back into a string
+  const result = capitalizedWords.join(' ');
+
+  return result;
 }

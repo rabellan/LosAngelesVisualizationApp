@@ -1,12 +1,49 @@
-const { Pool } = require('pg');
+const { Client, Pool } = require('pg');
+const fs = require('fs');
 
-const pool = new Pool({
-    host: "localhost",
-    user: "postgres",
-    port: 5432,
-    password: "postgres",
-    database: "la_crime_db"
-});
+// Creating flag to retrieve credentials from file or in this module.
+//let separate_file = false;
+let separate_file = true;
+
+//Creating flag to determine if server is deployed locally or remotely.
+//let remote = false;
+let remote = true;
+
+if (!separate_file) {
+    if (!remote) {
+        var creds = {
+            host: "localhost",
+            user: "postgres",
+            port: 5432,
+            password: "postgres",
+            database: "la_crime_db"
+        }
+    }
+    else {
+        var creds = {
+            max: 2,
+            host: "mahmud.db.elephantsql.com",
+            user: "vimnwbvh",
+            port: 5432,
+            password: "hYXaJQJjKbccRbR5KcG9PkjTUq0e53hE",
+            database: "vimnwbvh",
+            ssl: {
+            rejectUnauthorized: false,
+            }
+        }
+    }
+}
+else {
+    if (!remote)
+        var credPath = "../resources/creds_local.json";
+    else 
+        var credPath = "../resources/creds_remote.json";
+    var creds = JSON.parse(fs.readFileSync(credPath, 'utf8'));
+}
+
+
+const pool = new Pool(creds);
+
 
 crime_query = 'SELECT date_rptd, crim_cd_desc, location, lat, lon, time_occ, vict_age, vict_sex, vict_descent FROM crime\
  WHERE date_rptd BETWEEN $1 AND $2'

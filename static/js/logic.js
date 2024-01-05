@@ -3,7 +3,7 @@
 let flag = true;
 let crimes = [];
 let cache = {};
-let dateRange = "2023-12-04/2023-12-18";
+let dateRange = "2023-12-01/2023-12-31";
 
 // Marker for business locations
 let mcdLayer = L.layerGroup();
@@ -25,7 +25,7 @@ if (!flag) {
   });
 }
 else {
-  fetch('http://localhost:3000/api/crime/2023-12-04/2023-12-18')
+  fetch('http://localhost:3000/api/crime/2023-12-01/2023-12-31')
   .then(response => response.json())
   .then(data => {
     //console.log(data);
@@ -46,7 +46,7 @@ if (!flag) {
   mcd_locations.forEach(mcd => {
     if (mcd.lat && mcd.lon) {
       let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdIcon})
-        .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Zip Code ${mcd.zipcode}</h4> <h4>Business Owner ${mcd.business_name}</h4>`)
+        .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Address: ${mcd.location}</h4>`)
       mcdLayer.addLayer(mcdMarker);
     }
   });
@@ -67,7 +67,7 @@ function fetchBusiness(route, layer, logo) {
     data.forEach(business => {
       if (business.lat && business.lon) {
         let businessMarker = L.marker([business.lat, business.lon], {icon: logo})
-        .bindPopup(`<h1>${business.dba_name}</h1> <hr> <h4>Zip Code ${business.zipcode}</h4> <h4>Business Owner ${business.business_name}</h4>`);
+        .bindPopup(`<h1>${business.dba_name}</h1> <hr> <h4>Address: ${business.street_address} ${business.city}, CA ${business.zipcode}</h4>`);
 
         businessMarker.on('click', function() {
           if(cache.hasOwnProperty(business.id)){
@@ -85,7 +85,7 @@ function fetchBusiness(route, layer, logo) {
           }
     
           // Update the content of the sidebar with marker information
-          document.getElementById('street-address').textContent = `${business.street_address} \n Los Angeles, CA ${business.zipcode}`;
+          document.getElementById('street-address').textContent = `${business.street_address} \n ${business.city}, CA ${business.zipcode}`;
           document.getElementById('sidebar-title').textContent = business.dba_name;
           document.getElementById('owner').textContent = `Owned by: ${business.business_name}`;
 
@@ -370,7 +370,7 @@ function createVictSexPie(crimeData){
   console.log(Object.keys(victSexCounts));
   
   var pieChartLayout = {
-    height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+    height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
     paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };
@@ -408,12 +408,31 @@ function topThreeCrimes(crimeData){
   while (topThreeOL.firstChild) {
     topThreeOL.removeChild(topThreeOL.firstChild);
   }
-  for (let i = 0; i < Math.min(3, sortedCrimeCounts.length); i++){
+  for (let i = 0; i < Math.min(10, sortedCrimeCounts.length); i++){
     let li = document.createElement('li');
-    li.textContent = `${sortedCrimeCounts[i][0]}: ${sortedCrimeCounts[i][1]} occurrences`;
+    // var occ = "";
+    // if(sortedCrimeCounts[i][1] > 1){
+    //   occ = "occurences";
+    // }else{
+    //   occ = "occurence";
+    // }
+    li.textContent = `${capitalizeWords(sortedCrimeCounts[i][0])}: ${sortedCrimeCounts[i][1]}`;
     topThreeOL.append(li);
   }
   // // Output the sorted dictionary
   // console.log(sortedDictionary);
 
+}
+
+function capitalizeWords(str) {
+  // Split the string into an array of words
+  const words = str.toLowerCase().split(' ');
+
+  // Capitalize the first letter of each word
+  const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+
+  // Join the words back into a string
+  const result = capitalizedWords.join(' ');
+
+  return result;
 }

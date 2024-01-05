@@ -100,12 +100,13 @@ h1 {
 }
 
 .graph{
-  height: 20%;  /* Set to one-fifth of the sidebar height. P.S. Height does not do anything here. */
+  /* height: 20%;  Set to one-fifth of the sidebar height. P.S. Height does not do anything here. */
   background-color: #ddd; /* Lighter background color for the pie chart */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   margin-top: 10px; /* Adjust margin as needed */
   margin-right: 10px; /* Adjust margin as needed */
   padding: 10px;
+  width: 489px;
 }
 
 #vict-descent-pie-chart {

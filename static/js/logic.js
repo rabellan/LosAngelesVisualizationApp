@@ -255,7 +255,7 @@ function createPie(crimeData){
   console.log(Object.keys(victDescentCounts));
   
   var pieChartLayout = {
-    height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+    height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
     paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };

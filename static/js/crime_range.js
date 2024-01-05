@@ -64,12 +64,12 @@ function createDateDropdown() {
     dropdown1.selectAll("option").data(monthOptions).enter().append("option").text(d => d).property("selected", function(d){ return d == "12"; });
     let dropdown2 = container.append("select").attr("class", "menu").attr("id", "menu" + ((i*3)+3));
     if (first_date) {
-        dropdown2.selectAll("option").data(dayOptions).enter().append("option").text(d => d).property("selected", function(d){ return d == "4"; });
+        dropdown2.selectAll("option").data(dayOptions).enter().append("option").text(d => d).property("selected", function(d){ return d == "1"; });
         container.append("span").attr("id", "space").text("to");
         first_date = false;
     }
     else
-        dropdown2.selectAll("option").data(dayOptions).enter().append("option").text(d => d).property("selected", function(d){ return d == "18"; });
+        dropdown2.selectAll("option").data(dayOptions).enter().append("option").text(d => d).property("selected", function(d){ return d == "31"; });
     }
     let button = container.append("button").attr("id", "button").text("OK");
     button.on("click", getCrimeData)

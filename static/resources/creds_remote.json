@@ -1,0 +1,11 @@
+{
+    "max": 2,
+    "host": "mahmud.db.elephantsql.com",
+    "user": "vimnwbvh",
+    "port": 5432,
+    "password": "hYXaJQJjKbccRbR5KcG9PkjTUq0e53hE",
+    "database": "vimnwbvh",
+    "ssl": {
+        "rejectUnauthorized": false
+        }
+}

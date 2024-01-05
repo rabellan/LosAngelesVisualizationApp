@@ -77,3 +77,6 @@ PSQL COMMAND
 
 psql -d la_crime_db -U postgres -c "\copy (select * from business where lat != 0.0 or lon != 0.0) TO 'C:\Users\leon1\OneDrive\bootcamp_hw\group_projects\LosAngelesVisualizationApp\static\resources\businesses_clean.csv' WITH DELIMITER ',' CSV HEADER;"
 */
+
+
+-- COPY your_table_name FROM '/path/to/your/file.csv' DELIMITER ',' CSV HEADER;

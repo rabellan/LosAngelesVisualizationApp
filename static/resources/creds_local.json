@@ -1,0 +1,7 @@
+{
+    "host": "localhost",
+    "user": "postgres",
+    "port": 5432,
+    "password": "postgres",
+    "database": "la_crime_db"
+}

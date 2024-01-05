@@ -1,10 +1,8 @@
-//console.log(geolib.getDistance([37.7749, -122.4194], [38.7749, -122.4194]))
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
 let crimes = [];
 let cache = {};
-let year1;
 let dateRange = "2023-12-04/2023-12-18";
 
 // Marker for business locations
@@ -13,6 +11,36 @@ let chipotleLayer = L.layerGroup();
 let walmartLayer = L.layerGroup();
 let starbucksLayer = L.layerGroup();
 let walgreensLayer = L.layerGroup();
+
+
+// Marker Cluster for Crime Data
+let crimeClusterGroup = L.markerClusterGroup();
+if (!flag) {
+  la_crime_data.forEach(crime => {
+    if (crime.LAT && crime.LON) {
+      let crimeMarker = L.marker([crime.LAT, crime.LON])
+          .bindPopup(`<h1>${crime['Crm Cd Desc']}</h1><hr><p>${crime.LOCATION}</p><p>Date Reported: ${crime['Date Rptd']}</p>`);
+      crimeClusterGroup.addLayer(crimeMarker);
+    }
+  });
+}
+else {
+  fetch('http://localhost:3000/api/crime/2023-12-04/2023-12-18')
+  .then(response => response.json())
+  .then(data => {
+    //console.log(data);
+    
+    data.forEach(crime => {
+      let crimeMarker = L.marker([crime.lat, crime.lon])
+      .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);
+      crimeClusterGroup.addLayer(crimeMarker);
+      crimes.push(crime);
+    })
+  //console.log(crimes);
+  })
+  .catch(error => console.error('Error:', error));
+}
+
 
 if (!flag) {
   mcd_locations.forEach(mcd => {
@@ -116,41 +144,6 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// function fetchCrimes(){
-//   let crimeMarker = L.marker([crime.lat, crime.lon])
-//       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;
-//       crimeClusterGroup.addLayer(crimeMarker);
-//       crimes.push(crime);
-// }
-
-// Marker Cluster for Crime Data
-let crimeClusterGroup = L.markerClusterGroup();
-if (!flag) {
-  la_crime_data.forEach(crime => {
-    if (crime.LAT && crime.LON) {
-      let crimeMarker = L.marker([crime.LAT, crime.LON])
-          .bindPopup(`<h1>${crime['Crm Cd Desc']}</h1><hr><p>${crime.LOCATION}</p><p>Date Reported: ${crime['Date Rptd']}</p>`);
-      crimeClusterGroup.addLayer(crimeMarker);
-    }
-  });
-}
-else {
-  fetch('http://localhost:3000/api/crime/2023-12-04/2023-12-18')
-  .then(response => response.json())
-  .then(data => {
-    //console.log(data);
-    
-    data.forEach(crime => {
-      let crimeMarker = L.marker([crime.lat, crime.lon])
-      .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);
-      crimeClusterGroup.addLayer(crimeMarker);
-      crimes.push(crime);
-    })
-  //console.log(crimes);
-  })
-  .catch(error => console.error('Error:', error));
-}
-
 
 // Create tile layer.
 let street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -174,7 +167,7 @@ let overlayMap = {
 let myMap = L.map("map", {
   center: [34.07034926864842, -118.35914276112172],
   zoom: 10.5,
-  layers: [street, mcdLayer, chipotleLayer, crimeClusterGroup]
+  layers: [street, mcdLayer, crimeClusterGroup]
 });
 
 // Creating control layer
@@ -264,7 +257,7 @@ function createPie(crimeData){
   console.log(Object.keys(victDescentCounts));
   
   var pieChartLayout = {
-    height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+    height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
     paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
   };

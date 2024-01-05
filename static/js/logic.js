@@ -85,7 +85,9 @@ function fetchBusiness(route, layer, logo) {
           }
     
           // Update the content of the sidebar with marker information
-          document.getElementById('marker-info').textContent = business.street_address;
+          document.getElementById('street-address').textContent = `${business.street_address} \n Los Angeles, CA ${business.zipcode}`;
+          document.getElementById('sidebar-title').textContent = business.dba_name;
+          document.getElementById('owner').textContent = `Owned by: ${business.business_name}`;
 
           // Get crimes nearby
           let nearbyCrimes = [];
@@ -113,7 +115,9 @@ function fetchBusiness(route, layer, logo) {
           }
           console.log(nearbyCrimes);
           createPie(nearbyCrimes);
-          createAgeHistogram(nearbyCrimes); 
+          createAgeHistogram(nearbyCrimes);
+          createVictSexPie(nearbyCrimes);
+          topThreeCrimes(nearbyCrimes);
 
         });
 
@@ -170,8 +174,6 @@ let myMap = L.map("map", {
 let control = L.control.layers(baseMap, overlayMap, {
   collapsed: false
 }).addTo(myMap);
-
-
 
 // Create a legend for Cluster Marker frequency and position it at the bottom right
 var legend = L.control({ position: 'bottomleft' });
@@ -333,4 +335,85 @@ function createAgeHistogram(crimeData) {
 
   // Render the Plotly histogram with the layout configuration
   Plotly.newPlot('age-distribution', [histogramTrace], histogramLayout, config);
+}
+
+function createVictSexPie(crimeData){
+  //console.log(crimeData);
+
+  var config = {
+    displayModeBar: false
+  };
+
+  const sexNames = {
+    "M": "Male",
+    "F": "Female",
+    "X": "Unknown"
+};
+
+  var victSexValues = crimeData.map(crime => crime.vict_sex);
+
+  var victSexCounts = {};
+  victSexValues.forEach(value => {
+      victSexCounts[value] = (victSexCounts[value] || 0) + 1;
+  });
+
+  const pieChartData = {
+    labels: Object.keys(victSexCounts).map(code => sexNames[code]),
+    values: Object.values(victSexCounts),
+    type: 'pie',
+    marker: {
+      colors: ['rgba(8, 29, 88, 0.7)', 'rgba(37, 52, 148, 0.7)', 'rgba(34, 94, 168, 0.7)']
+    }
+  };
+
+  console.log("ethnicities below");
+  console.log(Object.keys(victSexCounts));
+  
+  var pieChartLayout = {
+    height: 0.3 * window.innerHeight, // Set to one-fifth of the window height
+    margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
+    paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
+  };
+
+  // Render the Plotly pie chart
+  Plotly.newPlot('vict-sex-pie-chart', [pieChartData], pieChartLayout, config);
+}
+
+function topThreeCrimes(crimeData){
+  //console.log(crimeData[0].crim_cd_desc);
+  const crimeCdDescArray = [];
+  crimeData.forEach(crime=>{
+    crimeCdDescArray.push(crime.crim_cd_desc);
+  })
+  // const crimeCdDescArray = crimeData.map(crime => crime.crime_cd_desc);
+  //console.log(crimeCdDescArray);
+  var crimeCounts = {};
+  crimeCdDescArray.forEach(value => {
+      crimeCounts[value] = (crimeCounts[value] || 0) + 1;
+  });
+  // crimeCounts.values.sort(function(a, b) {
+  //   return b - a;
+  // });
+  // console.log(crimeCounts);
+
+  // Convert the object to an array of key-value pairs
+  const crimeCountPairs = Object.entries(crimeCounts);
+
+  // Sort the array by values in descending order
+  const sortedCrimeCounts = crimeCountPairs.sort((a, b) => b[1] - a[1]);
+  console.log(sortedCrimeCounts);
+  // // Create a new object from the sorted array
+  // const sortedDictionary = Object.fromEntries(sortedCrimeCounts);
+  const topThreeOL = document.getElementById('topThreeCrimes');
+  while (topThreeOL.firstChild) {
+    topThreeOL.removeChild(topThreeOL.firstChild);
+  }
+  for (let i = 0; i < Math.min(3, sortedCrimeCounts.length); i++){
+    let li = document.createElement('li');
+    li.textContent = `${sortedCrimeCounts[i][0]}: ${sortedCrimeCounts[i][1]} occurrences`;
+    topThreeOL.append(li);
+  }
+  // // Output the sorted dictionary
+  // console.log(sortedDictionary);
+
 }

@@ -51,6 +51,10 @@ Geolib: A library that provides geospatial operations
     * D3
     * Geolib
 
+### Installating the web application in your local workstation
+* Download zip file from this [repository](https://github.com/rabellan/LosAngelesVisualizationApp)
+    * ![zip file](../resources/zip_file.png)
+
 
 ### Collaborators
 * [Ahlden Brough](https://github.com/AhldenBrough)

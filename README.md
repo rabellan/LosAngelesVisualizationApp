@@ -1,9 +1,9 @@
 # Los Angeles County Crime Mapping Application
 
 ### Overview and Purpose
-The Los Angeles Crime Mapping application is a web-based tool designed for visualizing crime data and McDonald's locations in Los Angeles. It uses LeafletJS, MarkerCluster, D3 for the frontend while utilizing NodeJS and PostgreSQL for the backend to provide an interactive map that displays detailed information on crimes and business locations.
+The Los Angeles Crime Mapping application is a web-based tool designed for visualizing crime data and McDonald's (and four other popular businesses) and locations in Los Angeles. It uses LeafletJS, MarkerCluster, D3 for the frontend while utilizing NodeJS and PostgreSQL for the backend to provide an interactive map that displays detailed information on crimes and business locations.
 
-This application is collaborative work to fulfill the Project 3 requirement for UCB Ext Data Bootcamp.
+This application is collaborative work to fulfill the Project 3 requirement for UCB Extension Data Bootcamp.
 
 ### Data Ethics and Considerations
 
@@ -41,7 +41,9 @@ Geolib: A library that provides geospatial operations
 
 ### Prerequisite
 * Local install
-    * NodeJS, npm, PostgreSQL
+    * [NodeJS](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
+    * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+    * [PostgreSQL](https://www.postgresql.org/download/)
 * Remote Javascript libraries can be leveraged using the following libraries CDN sites. Check [index.html](index.html) for location of CDNs
     * Leaflet
     * MarkerCluster

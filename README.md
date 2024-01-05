@@ -1,9 +1,19 @@
-# Los Angeles Crime Mapping Application
+# Los Angeles County Crime Mapping Application
 
-### Overview
+### Overview and Purpose
 The Los Angeles Crime Mapping application is a web-based tool designed for visualizing crime data and McDonald's locations in Los Angeles. It uses LeafletJS, MarkerCluster, D3 for the frontend while utilizing NodeJS and PostgreSQL for the backend to provide an interactive map that displays detailed information on crimes and business locations.
 
 This application is collaborative work to fulfill the Project 3 requirement for UCB Ext Data Bootcamp.
+
+### Data Ethics and Considerations
+
+In compliance with the [**California Consumer Privacy Act (CCPA)**](https://oag.ca.gov/privacy/ccpa), we ensure the following:
+
+This application utilizes publicly available data sourced from the Los Angeles Open Data Portal, specifically the "Crime Data from 2020 to Present" and "Listing of Active Businesses." The data used in this application is for informational and educational purposes only and is provided as a public service without warranty of any kind. 
+
+The application relies on data provided by third-party sources (the County of Los Angeles). We do not guarantee the completeness, accuracy, content, or fitness for a specific purpose of the information provided. Our application does not collect personal data from users.
+
+We respect individual privacy and confidentiality. Our application does not reveal or infer the identities of individuals, especially in crime data. The privacy concerns and anonymization in accordance with CCPA guidelines were inhereted from the source of the [data](https://data.lacity.org/). 
 
 ### Features
 * Interactive map with crime data and McDonald's locations.

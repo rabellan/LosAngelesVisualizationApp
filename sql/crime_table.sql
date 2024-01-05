@@ -24,10 +24,12 @@ CREATE TABLE Crime (
      )
 );
 
-select * from crime;
 
--- UPDATE crime
--- SET
---   vict_descent = CASE WHEN vict_descent = '' THEN 'X' ELSE vict_descent END,
---   vict_sex = CASE WHEN vict_sex = '' THEN 'X' ELSE vict_sex END;
+UPDATE crime
+SET
+  vict_descent = CASE WHEN vict_descent = '' THEN 'X' ELSE vict_descent END,
+  vict_sex = CASE WHEN vict_sex = '' THEN 'X' ELSE vict_sex END;
+
+
+select * from crime;
 

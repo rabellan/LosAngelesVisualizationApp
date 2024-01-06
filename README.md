@@ -1,21 +1,21 @@
 # Los Angeles County Crime Mapping Application
 
-### Overview and Purpose
-The Los Angeles Crime Mapping application is a web-based tool designed for visualizing crime data and McDonald's (and four other popular businesses) and locations in Los Angeles. It uses LeafletJS, MarkerCluster, D3 for the frontend while utilizing NodeJS and PostgreSQL for the backend to provide an interactive map that displays detailed information on crimes and business locations.
+## Overview and Purpose
+The Los Angeles Crime Mapping application is a dynamic web tool for visualizing crime data and the locations of McDonald's and other popular businesses in Los Angeles. Built with LeafletJS, MarkerCluster, and D3 for the frontend, and powered by NodeJS and PostgreSQL on the backend, it offers an interactive map displaying comprehensive information on crime incidents and business establishments.
+
+For demonstration purposes, the application features crime data from Los Angeles County restricted to the period between September 1, 2023, and December 26, 2023, showcasing the web application's capabilities.
 
 This application is collaborative work to fulfill the Project 3 requirement for UCB Extension Data Bootcamp.
 
-### Data Ethics and Considerations
+## Data Ethics and Considerations
 
-In compliance with the [**California Consumer Privacy Act (CCPA)**](https://oag.ca.gov/privacy/ccpa), we ensure the following:
+In adherence to the [California Consumer Privacy Act (CCPA)](https://oag.ca.gov/privacy/ccpa), our application is committed to the following ethical standards:
 
-This application utilizes publicly available data sourced from the Los Angeles Open Data Portal, specifically the "Crime Data from 2020 to Present" and "Listing of Active Businesses." The data used in this application is for informational and educational purposes only and is provided as a public service without warranty of any kind. 
+We utilize data that is publicly accessible from the Los Angeles Open Data Portal, specifically "Crime Data from 2020 to Present" and "Listing of Active Businesses." This data is used solely for informational and educational purposes, and is provided as-is without any warranty. Additionally, our application does not collect personal data from its users.
 
-The application relies on data provided by third-party sources (the County of Los Angeles). We do not guarantee the completeness, accuracy, content, or fitness for a specific purpose of the information provided. Our application does not collect personal data from users.
+We are committed to protecting individual privacy and confidentiality. The application is designed to prevent the identification of individuals, particularly in the crime data, maintaining privacy and data anonymization in line with CCPA guidelines, as established by the [data sources](https://data.lacity.org/).
 
-We respect individual privacy and confidentiality. Our application does not reveal or infer the identities of individuals, especially in crime data. The privacy concerns and anonymization in accordance with CCPA guidelines were inhereted from the source of the [data](https://data.lacity.org/). 
-
-### Features
+## Features
 * Interactive map with crime data and McDonald's locations.
 * Dynamic data visualization using LeafletJS 1.9.4, MarkerCluster 1.7.1, and D3 libraries
 * Customizable map icons and popups for enriched user experience.
@@ -91,7 +91,25 @@ The following software **MUST** be installed in your local workstation before yo
 ## Usage
 
 ### How to Use The Los Angeles County Crime Mapping Application
-* <img src="./static/resources/app.png"  width=75% height=75%>
+<img src="./static/resources/app.png">
+
+#### To show the business locations and crime cluster in the map
+* Step 1
+    * Pick a date range in the **Crime Data Range** pull down menu on the upper left corner of the application
+* Step 2
+    * Pick a business from the checkbox menu on the upper right corner of the application
+
+#### To show the crime statistics per business location
+* Step 1
+    * Click on a **business icon** in the map
+* Step 2
+    * Scroll down the sidebar to view the following crime statistics nearby the business location
+    * Crime statistics breakdown:
+        * Most Common Crimes and Count
+        * Victim Enthnicity Breakdown
+        * Victim Age Histogram
+        * Victim Sex Breakdown
+
 
 
 ## Collaborators

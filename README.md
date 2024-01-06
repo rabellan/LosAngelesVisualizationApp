@@ -74,9 +74,9 @@ The following software **MUST** be installed in your local workstation before yo
         * <img src="./static/resources/business_table.png"  width=50% height=50%>
     * create **crime** table
         * <img src="./static/resources/crime_table.png"  width=50% height=50%>
-    * Import business_clean.csv
+    * Import **business_clean.csv**
         * <img src="./static/resources/business_clean.png"  width=50% height=50%>
-    * Import crime_four_month.csv
+    * Import **crime_four_month.csv**
         * <img src="./static/resources/crime_four_months.png"  width=50% height=50%>
 * Start the app
     * Locate and **navigate to the local file system** containing the web application

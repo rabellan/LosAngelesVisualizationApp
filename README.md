@@ -63,7 +63,9 @@ The following software **MUST** be installed in your local workstation before yo
     * fs 0.0.1-security 
     * papaparse 5.4.1 
     * pg 8.11.3
-    * <img src="./static/resources/npm_packages.png">
+    * <em><b>see example below:</b></em>
+        * <code>npm install express@4.18.2 fs@0.0.1-security papaparse@5.4.1 pg@8.11.3</code>
+            * <img src="./static/resources/npm_packages.png">
 * Unzip the web app file
 * Build database in PostgreSQL using pgAdmin
     * Open **pgAmin4** and create "la_crime_db" database

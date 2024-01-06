@@ -82,7 +82,7 @@ The following software **MUST** be installed in your local workstation before yo
     * Locate and **navigate to the local file system** containing the web application
         * Navigate to **/static/js** PATH in your local filesystem (ex. ../Projects/LosAngelesVisualizationApp/static/js)
         * <img src="./static/resources/static_js.png"  width=50% height=50%>
-    * Type "**node app.js**"
+    * Type <code>node app.js</code>
         * <img src="./static/resources/node.png"  width=50% height=50%>
     * The web application should be running on http://localhost:3000 in your local workstation
         * <img src="./static/resources/app.png"  width=75% height=75%>

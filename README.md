@@ -40,10 +40,12 @@ Geolib: A library that provides geospatial operations
 ## Getting Started
 
 ### Prerequisite
-* Local install
+The following software **MUST** be installed in your local workstation before you can run the web application locally in your workstation.
+* Local install 
     * [NodeJS](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs)
     * [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
     * [PostgreSQL](https://www.postgresql.org/download/)
+    * [pgAdmin4](https://www.pgadmin.org/download/)
 * Remote Javascript libraries can be leveraged using the following libraries CDN sites. Check [index.html](index.html) for location of CDNs
     * Leaflet
     * MarkerCluster
@@ -51,9 +53,39 @@ Geolib: A library that provides geospatial operations
     * D3
     * Geolib
 
-### Installating the web application in your local workstation
-* Download zip file from this [repository](https://github.com/rabellan/LosAngelesVisualizationApp)
-    * ![zip file](../resources/zip_file.png)
+
+## Installating the web application in your local workstation
+* Download the prerequisite software packages indicated above (NodeJS, npm, PosgreSQL, and pgAdmin4)
+* You can either fork from the repository or download zip file from [here](https://github.com/rabellan/LosAngelesVisualizationApp)
+    * <img src="./static/resources/zip_file.png"  width=50% height=50%>
+* Install the following packages using node package manager (npm)
+    * express@4.18.2 
+    * fs@0.0.1-security 
+    * papaparse@5.4.1 
+    * pg@8.11.3
+    * <img src="./static/resources/npm_packages.png">
+* Unzip the web app file
+* Build database in PostgreSQL using pgAdmin
+    * Open **pgAmin4** and create "la_crime_db" database
+        * <img src="./static/resources/la_crime_db.png"  width=50% height=50%>
+    * Create **business** table
+        * <img src="./static/resources/business_table.png"  width=50% height=50%>
+    * create **crime** table
+        * <img src="./static/resources/crime_table.png"  width=50% height=50%>
+    * Import business_clean.csv
+        * <img src="./static/resources/business_clean.png"  width=50% height=50%>
+    * Import crime_four_month.csv
+        * <img src="./static/resources/crime_four_months.png"  width=50% height=50%>
+* Start the app
+    * Locate and **navigate to the local file system** containing the web application
+        * Navigate to **/static/js** PATH in your local filesystem (ex. ../Projects/LosAngelesVisualizationApp/static/js)
+        * <img src="./static/resources/static_js.png"  width=50% height=50%>
+    * Type "**node app.js**"
+        * <img src="./static/resources/node.png"  width=50% height=50%>
+    * The web application should be running on http://localhost:3000 in your local workstation
+        * <img src="./static/resources/app.png"  width=75% height=75%>
+
+
 
 
 ### Collaborators

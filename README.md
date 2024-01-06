@@ -54,8 +54,8 @@ The following software **MUST** be installed in your local workstation before yo
     * Geolib
 
 
-## Installating the web application in your local workstation
-* Download the prerequisite software packages indicated above (NodeJS, npm, PosgreSQL, and pgAdmin4)
+## Installing the web application in your local workstation
+* Download the pre-requisite software packages indicated above (NodeJS, npm, PosgreSQL, and pgAdmin4)
 * You can either fork from the repository or download zip file from [here](https://github.com/rabellan/LosAngelesVisualizationApp)
     * <img src="./static/resources/zip_file.png"  width=50% height=50%>
 * Install the following packages using node package manager (npm)

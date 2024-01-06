@@ -85,12 +85,16 @@ The following software **MUST** be installed in your local workstation before yo
     * Type <code>node app.js</code>
         * <img src="./static/resources/node.png"  width=50% height=50%>
     * The web application should be running on http://localhost:3000 in your local workstation
-        * <img src="./static/resources/app.png"  width=75% height=75%>
+        * <img src="./static/resources/app.png"  width=50% height=50%>
 
 
+## Usage
+
+### How to Use The Los Angeles County Crime Mapping Application
+* <img src="./static/resources/app.png"  width=75% height=75%>
 
 
-### Collaborators
+## Collaborators
 * [Ahlden Brough](https://github.com/AhldenBrough)
 * [Diahann Castellon](https://github.com/Diahann-c)
 * [Leon Luong](https://github.com/leonluong1)

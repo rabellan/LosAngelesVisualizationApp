@@ -59,10 +59,10 @@ The following software **MUST** be installed in your local workstation before yo
 * You can either fork from the repository or download zip file from [here](https://github.com/rabellan/LosAngelesVisualizationApp)
     * <img src="./static/resources/zip_file.png"  width=50% height=50%>
 * Install the following packages using node package manager (npm)
-    * express@4.18.2 
-    * fs@0.0.1-security 
-    * papaparse@5.4.1 
-    * pg@8.11.3
+    * express 4.18.2 
+    * fs 0.0.1-security 
+    * papaparse 5.4.1 
+    * pg 8.11.3
     * <img src="./static/resources/npm_packages.png">
 * Unzip the web app file
 * Build database in PostgreSQL using pgAdmin

@@ -26,6 +26,7 @@ LeafletJS 1.9.4: JavaScript library for responsive maps
 Leaflet.MarkerCluster 1.7.1: Manages large numbers of map markers
 D3: A powerful JavaScript library for manipulating documents based on data
 Geolib: A library that provides geospatial operations
+Plotly: A data visualization library for JavaScript
 
 ### Backend
 * **PostgreSQL** Database
@@ -78,6 +79,8 @@ The following software **MUST** be installed in your local workstation before yo
         * <img src="./static/resources/business_clean.png"  width=50% height=50%>
     * Import **crime_four_month.csv**
         * <img src="./static/resources/crime_four_months.png"  width=50% height=50%>
+* Set the "remote" flag to false by commenting out line 10 of db.js (red) and uncommenting line 9 of db.js (green).
+    * <img src="./static/resources/comment_out.png"  width=50% height=50%>
 * Start the app
     * Locate and **navigate to the local file system** containing the web application
         * Navigate to **/static/js** PATH in your local filesystem (ex. ../Projects/LosAngelesVisualizationApp/static/js)

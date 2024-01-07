@@ -49,8 +49,8 @@ function checkDate(year_param, month_param, day_param) {
 // console.log(checkDate(2000, 11, 30))
 
 function compareDateStr(dateStr1, dateStr2) {
-    console.log(dateStr1, dateStr2)
-    console.log(new Date(dateStr2) - new Date(dateStr1) > 0)
+    // console.log(dateStr1, dateStr2)
+    // console.log(new Date(dateStr2) - new Date(dateStr1) > 0)
     return new Date(dateStr2) - new Date(dateStr1) > 0;
 }
 
@@ -93,11 +93,11 @@ function getCrimeData() {
     let year1 = d3.select("#menu1").property("value");
     let month1 = d3.select("#menu2").property("value");
     let day1 = d3.select("#menu3").property("value");
-    console.log(`${year1}-${month1}-${day1}`);
+    // console.log(`${year1}-${month1}-${day1}`);
     let year2 = d3.select("#menu4").property("value");
     let month2 = d3.select("#menu5").property("value");
     let day2 = d3.select("#menu6").property("value");
-    console.log(`${year2}-${month2}-${day2}`);
+    // console.log(`${year2}-${month2}-${day2}`);
     if (!(checkDate(year1, month1, day1) && checkDate(year2, month2, day2))){
         console.log("At least one of your dates are invalid.")
         container.attr("class", "wrong-date");
@@ -112,7 +112,6 @@ function getCrimeData() {
     .then(response => response.json())
     .then(data => {
     container.attr("class", "right-date");
-    //console.log(data);
     dateRange = `${year1}-${month1}-${day1}/${year2}-${month2}-${day2}`
     control.removeLayer(crimeClusterGroup);
     myMap.removeLayer(crimeClusterGroup);

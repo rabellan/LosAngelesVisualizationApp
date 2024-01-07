@@ -1,4 +1,4 @@
-const { Client, Pool } = require('pg');
+const { Pool } = require('pg');
 const fs = require('fs');
 
 // Creating flag to retrieve credentials from file or in this module.

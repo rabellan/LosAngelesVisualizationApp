@@ -98,8 +98,8 @@ function fetchBusiness(route, layer, logo) {
           }
           else{
           // Otherwise calculate the nearby crimes
-          console.log("crimes below");
-          console.log(crimes);
+          // console.log("crimes below");
+          // console.log(crimes);
             crimes.forEach(crime => {
               if (geolib.getDistance([business.lat, business.lon], [crime.lat, crime.lon]) <= 1000){
                 nearbyCrimes.push(crime);
@@ -107,13 +107,13 @@ function fetchBusiness(route, layer, logo) {
             })
             // store nearby crimes in cache
             if(!cache.hasOwnProperty(business.id)){
-              // console.log("clearing");
+              console.log("clearing");
               cache[business.id] = {};
             }
             cache[business.id][dateRange] = nearbyCrimes;
             console.log("not found in cache")
           }
-          console.log(nearbyCrimes);
+          // console.log(nearbyCrimes);
           createPie(nearbyCrimes);
           createAgeHistogram(nearbyCrimes);
           createVictSexPie(nearbyCrimes);
@@ -253,8 +253,8 @@ function createPie(crimeData){
     }
   };
 
-  console.log("ethnicities below");
-  console.log(Object.keys(victDescentCounts));
+  // console.log("ethnicities below");
+  // console.log(Object.keys(victDescentCounts));
   
   var pieChartLayout = {
     height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
@@ -282,7 +282,7 @@ function createAgeHistogram(crimeData) {
 
   // Calculate the average age
   var averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
-  console.log(averageAge);
+  // console.log(averageAge);
   if (averageAge==NaN){
     averageAge = 'All ages unknown';
   }
@@ -366,8 +366,8 @@ function createVictSexPie(crimeData){
     }
   };
 
-  console.log("ethnicities below");
-  console.log(Object.keys(victSexCounts));
+  // console.log("ethnicities below");
+  // console.log(Object.keys(victSexCounts));
   
   var pieChartLayout = {
     height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
@@ -380,13 +380,13 @@ function createVictSexPie(crimeData){
 }
 
 function topThreeCrimes(crimeData){
-  //console.log(crimeData[0].crim_cd_desc);
+  // console.log(crimeData[0].crim_cd_desc);
   const crimeCdDescArray = [];
   crimeData.forEach(crime=>{
     crimeCdDescArray.push(crime.crim_cd_desc);
   })
   // const crimeCdDescArray = crimeData.map(crime => crime.crime_cd_desc);
-  //console.log(crimeCdDescArray);
+  // console.log(crimeCdDescArray);
   var crimeCounts = {};
   crimeCdDescArray.forEach(value => {
       crimeCounts[value] = (crimeCounts[value] || 0) + 1;
@@ -401,8 +401,8 @@ function topThreeCrimes(crimeData){
 
   // Sort the array by values in descending order
   const sortedCrimeCounts = crimeCountPairs.sort((a, b) => b[1] - a[1]);
-  console.log(sortedCrimeCounts);
-  // // Create a new object from the sorted array
+  // console.log(sortedCrimeCounts);
+  // Create a new object from the sorted array
   // const sortedDictionary = Object.fromEntries(sortedCrimeCounts);
   const topThreeOL = document.getElementById('topThreeCrimes');
   while (topThreeOL.firstChild) {
@@ -419,7 +419,7 @@ function topThreeCrimes(crimeData){
     li.textContent = `${capitalizeWords(sortedCrimeCounts[i][0])}: ${sortedCrimeCounts[i][1]}`;
     topThreeOL.append(li);
   }
-  // // Output the sorted dictionary
+  // Output the sorted dictionary
   // console.log(sortedDictionary);
 
 }

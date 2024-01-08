@@ -2,7 +2,7 @@
 //let flag = false;
 let flag = true;
 let url = "https://la-crime-mcdonalds-app.onrender.com";
-//let url = "http://localhost:10000";
+//let url = "http://localhost:3000";
 
 let crimes = [];
 let cache = {};

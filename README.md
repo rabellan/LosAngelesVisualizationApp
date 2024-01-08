@@ -81,6 +81,8 @@ The following software **MUST** be installed in your local workstation before yo
         * <img src="./static/resources/crime_four_months.png"  width=50% height=50%>
 * Set the "remote" flag to false by commenting out line 10 of db.js (red) and uncommenting line 9 of db.js (green).
     * <img src="./static/resources/comment_out.png"  width=50% height=50%>
+* Change the url variable by commenting out line 4 of logic.js (red) and uncommenting line 5 of logic.js (green).
+    * <img src="./static/resources/comment_out2.png"  width=50% height=50%>
 * Start the app
     * Locate and **navigate to the local file system** containing the web application
         * Navigate to **/static/js** PATH in your local filesystem (ex. ../Projects/LosAngelesVisualizationApp/static/js)

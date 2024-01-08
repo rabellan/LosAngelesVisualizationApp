@@ -33,3 +33,8 @@ SET
 
 select * from crime;
 
+/*
+PSQL COMMAND
+
+psql -d la_crime_db -U postgres -c "\copy (select * from crime) TO 'C:\Users\leon1\OneDrive\bootcamp_hw\group_projects\LosAngelesVisualizationApp\static\resources\crime_four_months_clean.csv' WITH DELIMITER ',' CSV HEADER;"
+*/

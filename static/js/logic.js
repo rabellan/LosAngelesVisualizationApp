@@ -1,9 +1,13 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
+let url = "http://localhost:10000";
+
 let crimes = [];
 let cache = {};
 let dateRange = "2023-12-01/2023-12-31";
+
+
 
 // Marker for business locations
 let mcdLayer = L.layerGroup();
@@ -25,7 +29,7 @@ if (!flag) {
   });
 }
 else {
-  fetch('http://localhost:3000/api/crime/2023-12-01/2023-12-31')
+  fetch(`${url}/api/crime/2023-12-01/2023-12-31`)
   .then(response => response.json())
   .then(data => {
     //console.log(data);
@@ -52,11 +56,11 @@ if (!flag) {
   });
 }
 else {
-  fetchBusiness('http://localhost:3000/api/mcd', mcdLayer, mcdIcon);
-  fetchBusiness('http://localhost:3000/api/chipotle', chipotleLayer, chipotleIcon);
-  fetchBusiness('http://localhost:3000/api/walmart', walmartLayer, walmartIcon);
-  fetchBusiness('http://localhost:3000/api/starbucks', starbucksLayer, starbucksIcon);
-  fetchBusiness('http://localhost:3000/api/walgreens', walgreensLayer, walgreensIcon);
+  fetchBusiness(`${url}/api/mcd`, mcdLayer, mcdIcon);
+  fetchBusiness(`${url}/api/chipotle`, chipotleLayer, chipotleIcon);
+  fetchBusiness(`${url}/api/walmart`, walmartLayer, walmartIcon);
+  fetchBusiness(`${url}/api/starbucks`, starbucksLayer, starbucksIcon);
+  fetchBusiness(`${url}/api/walgreens`, walgreensLayer, walgreensIcon);
 }
 
 function fetchBusiness(route, layer, logo) {

@@ -108,7 +108,7 @@ function getCrimeData() {
         container.attr("class", "wrong-date");
         return;
     }
-    fetch(`http://localhost:3000/api/crime/${year1}-${month1}-${day1}/${year2}-${month2}-${day2}`)
+    fetch(`${url}/api/crime/${year1}-${month1}-${day1}/${year2}-${month2}-${day2}`)
     .then(response => response.json())
     .then(data => {
     container.attr("class", "right-date");

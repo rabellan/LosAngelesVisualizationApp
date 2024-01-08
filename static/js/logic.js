@@ -1,4 +1,4 @@
-//Creating test flag to toggle SQL queries vs static CSV files to retrieve data
+// Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
 let url = "https://la-crime-mcdonalds-app.onrender.com";
@@ -32,14 +32,12 @@ else {
   fetch(`${url}/api/crime/2023-12-01/2023-12-31`)
   .then(response => response.json())
   .then(data => {
-    //console.log(data);
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);
       crimeClusterGroup.addLayer(crimeMarker);
       crimes.push(crime);
     })
-  //console.log(crimes);
   })
   .catch(error => console.error('Error:', error));
 }
@@ -65,7 +63,6 @@ function fetchBusiness(route, layer, logo) {
   fetch(route)
   .then(response => response.json())
   .then(data => {
-    //console.log(data);
     data.forEach(business => {
       if (business.lat && business.lon) {
         let businessMarker = L.marker([business.lat, business.lon], {icon: logo})
@@ -77,11 +74,9 @@ function fetchBusiness(route, layer, logo) {
           }
           
           // Toggle the class 'active' on both the map and sidebar elements
-          // console.log('turning on');
           var mapContainer = document.getElementById('map');
           
           if(!mapContainer.classList.contains('active')){
-            // console.log("didnt contain active");
             mapContainer.classList.toggle('active');
             document.getElementById('sidebar').classList.toggle('active');
           }
@@ -100,8 +95,6 @@ function fetchBusiness(route, layer, logo) {
           }
           else{
           // Otherwise calculate the nearby crimes
-          // console.log("crimes below");
-          // console.log(crimes);
             crimes.forEach(crime => {
               if (geolib.getDistance([business.lat, business.lon], [crime.lat, crime.lon]) <= 1000){
                 nearbyCrimes.push(crime);
@@ -115,7 +108,6 @@ function fetchBusiness(route, layer, logo) {
             cache[business.id][dateRange] = nearbyCrimes;
             console.log("not found in cache")
           }
-          // console.log(nearbyCrimes);
           createPie(nearbyCrimes);
           createAgeHistogram(nearbyCrimes);
           createVictSexPie(nearbyCrimes);
@@ -131,7 +123,6 @@ function fetchBusiness(route, layer, logo) {
 }
 
 document.addEventListener('click', function(event) {
-  //console.log('its called');
   var sidebar = document.getElementById('sidebar');
   var clickedElement = event.target;
 
@@ -182,9 +173,9 @@ var legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function(map) {
     let div = L.DomUtil.create('div', 'info legend');
     let grades = ['1-9 Incidents', '10 - 99 Incidents', '> 100 Incidents']; // Replace with your color codes
-    //Legend Title
+    // Legend Title
     div.innerHTML = '<strong>Number of Incidents</strong><br>';
-    // loop through our density intervals and generate a label with a colored square for each interval
+    // Loop through our density intervals and generate a label with a colored square for each interval
     grades.forEach(function (grade, index) {
         div.innerHTML +=
             '<i style="background:' + getColor(grade) + '"></i> ' +
@@ -198,15 +189,14 @@ legend.addTo(myMap);
 // Function to return color based on the grade
 function getColor(grade) {
     switch (grade) {
-        case '1-9 Incidents': return '#B5E28C'; // replace with actual color code
-        case '10 - 99 Incidents': return '#F1D357'; // replace with actual color code
-        case '> 100 Incidents': return '#FD9C73'; // replace with actual color code
+        case '1-9 Incidents': return '#B5E28C'; // Replace with actual color code
+        case '10 - 99 Incidents': return '#F1D357'; // Replace with actual color code
+        case '> 100 Incidents': return '#FD9C73'; // Replace with actual color code
         default: return '#ffffff';
     }
 }
 
 function createPie(crimeData){
-  //console.log(crimeData);
   let config = {
     displayModeBar: false
   };
@@ -251,13 +241,11 @@ function createPie(crimeData){
               'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
     }
   };
-  // console.log("ethnicities below");
-  // console.log(Object.keys(victDescentCounts));
 
   let pieChartLayout = {
-    height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
+    height: 230,
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
-    paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
+    paper_bgcolor: '#f2f2f2',
   };
 
   // Render the Plotly pie chart
@@ -279,7 +267,6 @@ function createAgeHistogram(crimeData) {
 
   // Calculate the average age
   const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
-  // console.log(averageAge);
   if (averageAge == NaN){
     averageAge = 'All ages unknown';
   }
@@ -296,11 +283,6 @@ function createAgeHistogram(crimeData) {
       colorscale: 'YlGnBu',
       cmin: Math.min(...victimAges),
       cmax: Math.max(...victimAges),
-      // colorbar: {
-      //   title: 'Age',
-      //   tickvals: [Math.min(...victimAges), Math.max(...victimAges)],
-      //   ticktext: [Math.min(...victimAges), Math.max(...victimAges)],
-      // }
     }
   };
 
@@ -334,7 +316,6 @@ function createAgeHistogram(crimeData) {
 }
 
 function createVictSexPie(crimeData){
-  //console.log(crimeData);
   let config = {
     displayModeBar: false
   };
@@ -360,13 +341,10 @@ function createVictSexPie(crimeData){
     }
   };
 
-  // console.log("ethnicities below");
-  // console.log(Object.keys(victSexCounts));
-
   let pieChartLayout = {
-    height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
+    height: 230,
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
-    paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
+    paper_bgcolor: '#f2f2f2',
   };
 
   // Render the Plotly pie chart
@@ -378,7 +356,6 @@ function topThreeCrimes(crimeData){
   crimeData.forEach(crime=>{
     crimeCdDescArray.push(crime.crim_cd_desc);
   })
-  // console.log(crimeCdDescArray);
   let crimeCounts = {};
   crimeCdDescArray.forEach(value => {
       crimeCounts[value] = (crimeCounts[value] || 0) + 1;
@@ -389,8 +366,6 @@ function topThreeCrimes(crimeData){
 
   // Sort the array by values in descending order
   const sortedCrimeCounts = crimeCountPairs.sort((a, b) => b[1] - a[1]);
-  // console.log(sortedCrimeCounts);
-  // Create a new object from the sorted array
   const topThreeOL = document.getElementById('topThreeCrimes');
   while (topThreeOL.firstChild) {
     topThreeOL.removeChild(topThreeOL.firstChild);
@@ -400,9 +375,6 @@ function topThreeCrimes(crimeData){
     li.textContent = `${capitalizeWords(sortedCrimeCounts[i][0])}: ${sortedCrimeCounts[i][1]}`;
     topThreeOL.append(li);
   }
-  // Output the sorted dictionary
-  // console.log(sortedDictionary);
-
 }
 
 function capitalizeWords(str) {

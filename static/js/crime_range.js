@@ -89,6 +89,7 @@ function printSelections() {
 
 function getCrimeData() {
     let container = d3.select("#date-container");
+    container.attr("class", "right-date");
     let year1 = d3.select("#menu1").property("value");
     let month1 = d3.select("#menu2").property("value");
     let day1 = d3.select("#menu3").property("value");
@@ -126,6 +127,7 @@ function getCrimeData() {
     })
     myMap.addLayer(crimeClusterGroup);
     control.addOverlay(crimeClusterGroup, "Crime");
+    container.attr("class", "date-loaded");
     console.log("crime range updated");
     
   })

@@ -57,6 +57,10 @@ h1 {
   background: rgba(254, 170, 170, 0.8);
 }
 
+.date-loaded {
+  background: rgb(167, 239, 167);
+}
+
 #crime {
   padding: 0;
   margin: 0;

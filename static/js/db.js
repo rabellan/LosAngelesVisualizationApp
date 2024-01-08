@@ -5,7 +5,7 @@ const fs = require('fs');
 //let separate_file = false;
 let separate_file = true;
 
-//Creating flag to determine if server is deployed locally or remotely.
+// Creating flag to determine if server is deployed locally or remotely.
 //let remote = false;
 let remote = true;
 

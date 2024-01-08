@@ -50,7 +50,6 @@ function checkDate(year_param, month_param, day_param) {
 
 function compareDateStr(dateStr1, dateStr2) {
     // console.log(dateStr1, dateStr2)
-    // console.log(new Date(dateStr2) - new Date(dateStr1) > 0)
     return new Date(dateStr2) - new Date(dateStr1) > 0;
 }
 
@@ -116,8 +115,9 @@ function getCrimeData() {
     control.removeLayer(crimeClusterGroup);
     myMap.removeLayer(crimeClusterGroup);
     crimeClusterGroup = L.markerClusterGroup();
+    
     // Reset crimes array for new date range
-    crimes.length =0;
+    crimes.length = 0;
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);;

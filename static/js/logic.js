@@ -9,7 +9,6 @@ let cache = {};
 let dateRange = "2023-12-01/2023-12-31";
 
 
-
 // Marker for business locations
 let mcdLayer = L.layerGroup();
 let chipotleLayer = L.layerGroup();
@@ -34,7 +33,6 @@ else {
   .then(response => response.json())
   .then(data => {
     //console.log(data);
-    
     data.forEach(crime => {
       let crimeMarker = L.marker([crime.lat, crime.lon])
       .bindPopup(`<h1>${crime.crim_cd_desc}</h1><hr><p>${crime.location}</p><p>Date Reported: ${crime.date_rptd}</p>`);
@@ -50,8 +48,7 @@ else {
 if (!flag) {
   mcd_locations.forEach(mcd => {
     if (mcd.lat && mcd.lon) {
-      let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdIcon})
-        .bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Address: ${mcd.location}</h4>`)
+      let mcdMarker = L.marker([mcd.lat, mcd.lon], {icon: mcdIcon}).bindPopup(`<h1>${mcd.dba_name}</h1> <hr> <h4>Address: ${mcd.location}</h4>`)
       mcdLayer.addLayer(mcdMarker);
     }
   });
@@ -110,7 +107,7 @@ function fetchBusiness(route, layer, logo) {
                 nearbyCrimes.push(crime);
               }
             })
-            // store nearby crimes in cache
+            // Store nearby crimes in cache
             if(!cache.hasOwnProperty(business.id)){
               console.log("clearing");
               cache[business.id] = {};
@@ -182,10 +179,9 @@ let control = L.control.layers(baseMap, overlayMap, {
 
 // Create a legend for Cluster Marker frequency and position it at the bottom right
 var legend = L.control({ position: 'bottomleft' });
-legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = ['1-9 Incidents', '10 - 99 Incidents', '> 100 Incidents'], // Replace with your color codes
-        labels = [];
+legend.onAdd = function(map) {
+    let div = L.DomUtil.create('div', 'info legend');
+    let grades = ['1-9 Incidents', '10 - 99 Incidents', '> 100 Incidents']; // Replace with your color codes
     //Legend Title
     div.innerHTML = '<strong>Number of Incidents</strong><br>';
     // loop through our density intervals and generate a label with a colored square for each interval
@@ -211,8 +207,7 @@ function getColor(grade) {
 
 function createPie(crimeData){
   //console.log(crimeData);
-
-  var config = {
+  let config = {
     displayModeBar: false
   };
 
@@ -238,14 +233,13 @@ function createPie(crimeData){
     "Z": "Asian Indian"
 };
 
-  var victDescentValues = crimeData.map(crime => crime.vict_descent);
-
-  var victDescentCounts = {};
+  let victDescentValues = crimeData.map(crime => crime.vict_descent);
+  let victDescentCounts = {};
   victDescentValues.forEach(value => {
       victDescentCounts[value] = (victDescentCounts[value] || 0) + 1;
   });
 
-  const pieChartData = {
+  let pieChartData = {
     labels: Object.keys(victDescentCounts).map(code => descentNames[code]),
     values: Object.values(victDescentCounts),
     type: 'pie',
@@ -257,11 +251,10 @@ function createPie(crimeData){
               'rgba(128, 0, 38, 0.7)', 'rgba(84, 0, 27, 0.7)']
     }
   };
-
   // console.log("ethnicities below");
   // console.log(Object.keys(victDescentCounts));
-  
-  var pieChartLayout = {
+
+  let pieChartLayout = {
     height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
     paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
@@ -272,13 +265,12 @@ function createPie(crimeData){
 }
 
 function createAgeHistogram(crimeData) {
-  var config = {
+  let config = {
     displayModeBar: false
   };
 
   // Extract victim ages
   const victimAges = crimeData.map(crime => crime.vict_age).filter(age => age > 0);
-
   if (victimAges.length === 0) {
     // Handle the case where there are no valid ages
     console.error('No valid ages available for histogram.');
@@ -286,16 +278,16 @@ function createAgeHistogram(crimeData) {
   }
 
   // Calculate the average age
-  var averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
+  const averageAge = victimAges.reduce((sum, age) => sum + age, 0) / victimAges.length;
   // console.log(averageAge);
-  if (averageAge==NaN){
+  if (averageAge == NaN){
     averageAge = 'All ages unknown';
   }
 
   const averageAgeText = isNaN(averageAge) ? 'All Ages Unknown' : `Average Age: ${averageAge.toFixed(2)}`;
 
   // Create a histogram trace with YlGnBu color scale
-  const histogramTrace = {
+  let histogramTrace = {
     x: victimAges,
     type: 'histogram',
     nbinsx: 20,
@@ -313,15 +305,14 @@ function createAgeHistogram(crimeData) {
   };
 
   // Layout options for the histogram
-  const histogramLayout = {
+  let histogramLayout = {
     xaxis: {
       title: 'Age'
     },
     yaxis: {
       title: 'Frequency'
     },
-    annotations: [
-      {
+    annotations: [{
         x: 0.95,
         y: 1.05,
         xref: 'paper',
@@ -344,8 +335,7 @@ function createAgeHistogram(crimeData) {
 
 function createVictSexPie(crimeData){
   //console.log(crimeData);
-
-  var config = {
+  let config = {
     displayModeBar: false
   };
 
@@ -353,16 +343,15 @@ function createVictSexPie(crimeData){
     "M": "Male",
     "F": "Female",
     "X": "Unknown"
-};
+  };
+  let victSexValues = crimeData.map(crime => crime.vict_sex);
 
-  var victSexValues = crimeData.map(crime => crime.vict_sex);
-
-  var victSexCounts = {};
+  let victSexCounts = {};
   victSexValues.forEach(value => {
       victSexCounts[value] = (victSexCounts[value] || 0) + 1;
   });
 
-  const pieChartData = {
+  let pieChartData = {
     labels: Object.keys(victSexCounts).map(code => sexNames[code]),
     values: Object.values(victSexCounts),
     type: 'pie',
@@ -373,8 +362,8 @@ function createVictSexPie(crimeData){
 
   // console.log("ethnicities below");
   // console.log(Object.keys(victSexCounts));
-  
-  var pieChartLayout = {
+
+  let pieChartLayout = {
     height: 230, //0.3 * window.innerHeight, // Set to one-fifth of the window height
     margin: { t: 35, b: 27, l: 0, r: 0 }, // Adjust margins as needed
     paper_bgcolor: '#f2f2f2', // Lighter background color for the pie chart
@@ -385,21 +374,15 @@ function createVictSexPie(crimeData){
 }
 
 function topThreeCrimes(crimeData){
-  // console.log(crimeData[0].crim_cd_desc);
-  const crimeCdDescArray = [];
+  let crimeCdDescArray = [];
   crimeData.forEach(crime=>{
     crimeCdDescArray.push(crime.crim_cd_desc);
   })
-  // const crimeCdDescArray = crimeData.map(crime => crime.crime_cd_desc);
   // console.log(crimeCdDescArray);
-  var crimeCounts = {};
+  let crimeCounts = {};
   crimeCdDescArray.forEach(value => {
       crimeCounts[value] = (crimeCounts[value] || 0) + 1;
   });
-  // crimeCounts.values.sort(function(a, b) {
-  //   return b - a;
-  // });
-  // console.log(crimeCounts);
 
   // Convert the object to an array of key-value pairs
   const crimeCountPairs = Object.entries(crimeCounts);
@@ -408,19 +391,12 @@ function topThreeCrimes(crimeData){
   const sortedCrimeCounts = crimeCountPairs.sort((a, b) => b[1] - a[1]);
   // console.log(sortedCrimeCounts);
   // Create a new object from the sorted array
-  // const sortedDictionary = Object.fromEntries(sortedCrimeCounts);
   const topThreeOL = document.getElementById('topThreeCrimes');
   while (topThreeOL.firstChild) {
     topThreeOL.removeChild(topThreeOL.firstChild);
   }
   for (let i = 0; i < Math.min(10, sortedCrimeCounts.length); i++){
     let li = document.createElement('li');
-    // var occ = "";
-    // if(sortedCrimeCounts[i][1] > 1){
-    //   occ = "occurences";
-    // }else{
-    //   occ = "occurence";
-    // }
     li.textContent = `${capitalizeWords(sortedCrimeCounts[i][0])}: ${sortedCrimeCounts[i][1]}`;
     topThreeOL.append(li);
   }
@@ -432,12 +408,9 @@ function topThreeCrimes(crimeData){
 function capitalizeWords(str) {
   // Split the string into an array of words
   const words = str.toLowerCase().split(' ');
-
   // Capitalize the first letter of each word
   const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-
   // Join the words back into a string
   const result = capitalizedWords.join(' ');
-
   return result;
 }

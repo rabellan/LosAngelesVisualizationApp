@@ -1,7 +1,8 @@
 //Creating test flag to toggle SQL queries vs static CSV files to retrieve data
 //let flag = false;
 let flag = true;
-let url = "http://localhost:10000";
+let url = "https://la-crime-mcdonalds-app.onrender.com:10000";
+//let url = "http://localhost:10000";
 
 let crimes = [];
 let cache = {};

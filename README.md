@@ -3,11 +3,11 @@
 ## Overview and Purpose
 The Los Angeles Crime Mapping application is a dynamic web tool for visualizing crime data and the locations of McDonald's and other popular businesses in Los Angeles. Built with LeafletJS, MarkerCluster, and D3 for the frontend, and powered by NodeJS and PostgreSQL on the backend, it offers an interactive map displaying comprehensive information on crime incidents and business establishments.
 
-For demonstration purposes, the application features crime data from Los Angeles County restricted to the period between September 1, 2023, and December 26, 2023, showcasing the web application's capabilities.
+For demonstration purposes, the application features crime data from Los Angeles County restricted to the period between September 1st, 2023, and December 31st, 2023, showcasing the web application's capabilities.
 
 This application is collaborative work to fulfill the Project 3 requirement for UCB Extension Data Bootcamp.
 
-### Linked to app hosted on Render: https://la-crime-mcdonalds-app.onrender.com/ 
+#### Link to app hosted on Render: https://la-crime-mcdonalds-app.onrender.com/ 
 
 ## Data Ethics and Considerations
 
@@ -24,39 +24,40 @@ We are committed to protecting individual privacy and confidentiality. The appli
 * Filters for crime types, date ranges, and specific areas.*
 
 ### Frontend
-LeafletJS 1.9.4: JavaScript library for responsive maps
-Leaflet.MarkerCluster 1.7.1: Manages large numbers of map markers
-D3: A powerful JavaScript library for manipulating documents based on data
-Geolib: A library that provides geospatial operations
-Plotly: A data visualization library for JavaScript
+LeafletJS 1.9.4: JavaScript library for responsive maps  
+Leaflet.MarkerCluster 1.7.1: Manages large numbers of map markers  
+D3: A powerful JavaScript library for manipulating documents based on data  
+Geolib: A library that provides geospatial operations  
+Plotly: A data visualization library for JavaScript  
 
 ### Backend
 * **PostgreSQL** Database
     * Crime Data: Derived from the [Los Angeles Open Data Portal](https://data.lacity.org/Public-Safety/Crime-Data-from-2020-to-Present/2nrs-mtv8/about_data)
     * Los Angeles Business Aggragate Data, also from [Los Angeles Open Data Portal](https://data.lacity.org/Administration-Finance/Listing-of-Active-Businesses/6rrh-rzua/about_data)
+    * Remotely hosted on [ElephantSQL](https://www.elephantsql.com/)
 * **NodeJS** Libraries:
     * **fs** 0.0.1-security: File system interactions.
     * **papaparse** 5.4.1: For CSV parsing (used for testing)
     * **pg** 8.11.3: PostgreSQL client.
     * **express** 4.18.2: Minimal Node JS web framework
 
-### Data Analytics using Tableau
-##Data Clean Up using Tableau Prep
+## Data Analytics using Tableau
+### Data Clean Up using Tableau Prep
 Ingested in the two excel files for "businesses_clean.xlsx" and "crime_four_months_clean.xlsx", cleaned both files by restructing field names and adjusting the aliasas for certain fields such as:
    Sex: M to Male, F to Female and X to Unknown
    Gender: (as specified by the LA City.org website)
 Ensured consistent spelling on all columns, the two files were joined together on the th longitude and latitude fields to create tall data file. and output a hyper file, xlsx file and csv file. 
 
-##Data Visualization
-The completed hyper file was imported into tableau and ten visualizations were created to create a dynamic dashboard that adjusts based on the time frame (by month), age, time of fay, race, sex, vicitm age and area. 
-Visual 1: Crime by Location: Plots latitiude, longitude and overlays the count of crime by type of crime.
-Visual 2: Count of Crime: Count of crime incidents
-Visual 3: Number of Crimes by Type: Top 10 count of crimes by descritpion 
-Visual 4: Number of Crimes by Time of Day: Calcualtion to distinguish military time for morning vs. night. And then produced a count by time of day.
-Visual 5: Number of Crimes by Area: Count of crimes by area name
-Visual 6: Count by Race: Color coded pie chart count of victim by race with percentages. 
-Visual 7: Crime Rate Trend: Count og crime by month 
-Visual 8: Crime Rate Trend by Type: Count of crime by month per type
+### Data Visualization
+The completed hyper file was imported into Tableau and ten visualizations were created to create a dynamic dashboard that adjusts based on the time frame (by month), age, time of day, race, sex, victim, age and area.  
+Visual 1: Crime by Location: Plots latitiude, longitude and overlays the count of crime by type of crime  
+Visual 2: Count of Crime: Count of crime incidents  
+Visual 3: Number of Crimes by Type: Top 10 count of crimes by description   
+Visual 4: Number of Crimes by Time of Day: Calcualtion to distinguish military time for morning vs. night. And then produced a count by time of day.  
+Visual 5: Number of Crimes by Area: Count of crimes by area name  
+Visual 6: Count by Race: Color-coded pie chart count of victim by race with percentages   
+Visual 7: Crime Rate Trend: Count of crime by month  
+Visual 8: Crime Rate Trend by Type: Count of crime by month per type  
 
 
 ## Getting Started

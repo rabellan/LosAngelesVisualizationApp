@@ -40,6 +40,13 @@ Plotly: A data visualization library for JavaScript
     * **pg** 8.11.3: PostgreSQL client.
     * **express** 4.18.2: Minimal Node JS web framework
 
+### Data Analytics using Tableau
+# ##Data Clean Up using Tableau Prep
+Ingested in the two excel files for "businesses_clean.xlsx" and "crime_four_months_clean.xlsx", cleaned both files by restructing field names and adjusting the aliasas for certain fields such as:
+   Sex: M to Male, F to Female and X to Unknown
+   Gender: (as specified by the LA City.org website)
+Ensured consistent spelling on all columns and output a hyper file, xlsx file and csv file. 
+
 ## Getting Started
 
 ### Prerequisite

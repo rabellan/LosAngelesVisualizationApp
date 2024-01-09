@@ -41,11 +41,23 @@ Plotly: A data visualization library for JavaScript
     * **express** 4.18.2: Minimal Node JS web framework
 
 ### Data Analytics using Tableau
-# ##Data Clean Up using Tableau Prep
+# #Data Clean Up using Tableau Prep
 Ingested in the two excel files for "businesses_clean.xlsx" and "crime_four_months_clean.xlsx", cleaned both files by restructing field names and adjusting the aliasas for certain fields such as:
    Sex: M to Male, F to Female and X to Unknown
    Gender: (as specified by the LA City.org website)
-Ensured consistent spelling on all columns and output a hyper file, xlsx file and csv file. 
+Ensured consistent spelling on all columns, the two files were joined together on the th longitude and latitude fields to create tall data file. and output a hyper file, xlsx file and csv file. 
+
+# #Data Visualization
+The completed hyper file was imported into tableau and ten visualizations were created to create a dynamic dashboard that adjusts based on the time frame (by month), age, time of fay, race, sex, vicitm age and area. 
+Visual 1: Crime by Location: Plots latitiude, longitude and overlays the count of crime by type of crime.
+Visual 2: Count of Crime: Count of crime incidents
+Visual 3: Number of Crimes by Type: Top 10 count of crimes by descritpion 
+Visual 4: Number of Crimes by Time of Day: Calcualtion to distinguish military time for morning vs. night. And then produced a count by time of day.
+Visual 5: Number of Crimes by Area: Count of crimes by area name
+Visual 6: Count by Race: Color coded pie chart count of victim by race with percentages. 
+Visual 7: Crime Rate Trend: Count og crime by month 
+Visual 8: Crime Rate Trend by Type: Count of crime by month per type
+
 
 ## Getting Started
 

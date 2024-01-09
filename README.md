@@ -7,6 +7,8 @@ For demonstration purposes, the application features crime data from Los Angeles
 
 This application is collaborative work to fulfill the Project 3 requirement for UCB Extension Data Bootcamp.
 
+### Linked to app hosted on Render: https://la-crime-mcdonalds-app.onrender.com/ 
+
 ## Data Ethics and Considerations
 
 In adherence to the [California Consumer Privacy Act (CCPA)](https://oag.ca.gov/privacy/ccpa), our application is committed to the following ethical standards:

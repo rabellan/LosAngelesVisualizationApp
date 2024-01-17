@@ -1,4 +1,7 @@
-#Node files
+# Desktop files
+.DS_Store
+
+# Node files
 node_modules/
 package-lock.json
 

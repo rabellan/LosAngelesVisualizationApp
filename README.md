@@ -9,6 +9,8 @@ This application is collaborative work to fulfill the Project 3 requirement for 
 
 #### Link to app hosted on Render: https://la-crime-mcdonalds-app.onrender.com/ 
 
+#### Link to the project presentation: https://docs.google.com/presentation/d/1jrIrCvwjFqfIEsA1a5wgnsRy0Nyot_0hN6cbyxFZH7M/edit#slide=id.gaa3fb9f80e_0_3809
+
 ## Data Ethics and Considerations
 
 In adherence to the [California Consumer Privacy Act (CCPA)](https://oag.ca.gov/privacy/ccpa), our application is committed to the following ethical standards:
